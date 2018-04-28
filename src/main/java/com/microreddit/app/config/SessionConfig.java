@@ -12,6 +12,8 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 
 /**
  * Configures Redis connection.
+ *
+ * @author Josh Harkema
  */
 @Configuration
 @EnableRedisHttpSession

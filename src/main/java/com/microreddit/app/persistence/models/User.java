@@ -12,6 +12,8 @@ import java.util.UUID;
 
 /**
  * Defines the User model. UserName is stored in UserKey for fast search lookups.
+ *
+ * @author Josh Harkema
  */
 @Table("users")
 public class User {

@@ -13,6 +13,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+/**
+ * Basic config for Spring security. :TODO: this is no where near production!!! Testing only.
+ *
+ * @author Josh Harkema
+ */
 @Configuration
 @ComponentScan(basePackages = {"com.microreddit.app.services"})
 @EnableWebSecurity

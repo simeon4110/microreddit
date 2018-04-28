@@ -11,6 +11,8 @@ import java.util.UUID;
 
 /**
  * Key class implements cassandra primary key columns for fast comment lookups.
+ *
+ * @author Josh Harkema
  */
 @PrimaryKeyClass
 public class CommentKey implements Serializable {

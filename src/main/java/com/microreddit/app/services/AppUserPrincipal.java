@@ -6,6 +6,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
+/**
+ * POJO intermediary for user registration.
+ *
+ * @author Josh Harkema
+ */
 public class AppUserPrincipal implements UserDetails {
     private User user;
 

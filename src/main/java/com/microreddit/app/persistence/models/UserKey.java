@@ -9,6 +9,8 @@ import java.util.UUID;
 
 /**
  * Key class implements cassandra primary key columns for fast user lookups.
+ *
+ * @author Josh Harkema
  */
 @PrimaryKeyClass
 public class UserKey implements Serializable {

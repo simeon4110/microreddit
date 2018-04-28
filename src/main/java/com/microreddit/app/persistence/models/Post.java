@@ -8,6 +8,8 @@ import org.springframework.data.cassandra.core.mapping.Table;
 
 /**
  * Model to store all the post data.
+ *
+ * @author Josh Harkema
  */
 @Table("posts")
 public class Post {

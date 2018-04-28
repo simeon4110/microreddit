@@ -12,6 +12,8 @@ import java.util.UUID;
 
 /**
  * Model stores sub data. Query managed in SubKey.class.
+ *
+ * @author Josh Harkema
  */
 @Table("subs")
 public class Sub {

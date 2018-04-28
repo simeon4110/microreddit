@@ -4,6 +4,11 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CountDownLatch;
 
+/**
+ * Basic receiver for testing rabbitMQ.
+ *
+ * @author Josh Harkema
+ */
 @Component
 public class Receiver {
     private CountDownLatch latch = new CountDownLatch(1);

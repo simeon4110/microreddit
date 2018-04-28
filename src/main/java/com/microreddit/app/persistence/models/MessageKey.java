@@ -11,6 +11,8 @@ import java.util.UUID;
 
 /**
  * Key class implements cassandra primary key columns for fast message lookups.
+ *
+ * @author Josh Harkema
  */
 @PrimaryKeyClass
 public class MessageKey implements Serializable {

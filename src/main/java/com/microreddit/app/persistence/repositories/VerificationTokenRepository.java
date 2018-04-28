@@ -8,6 +8,11 @@ import java.util.Date;
 import java.util.UUID;
 import java.util.stream.Stream;
 
+/**
+ * Repo for grabbing verification tokens.
+ *
+ * @author Josh Harkema
+ */
 public interface VerificationTokenRepository extends CassandraRepository<VerificationToken, UUID> {
     @Query(allowFiltering = true)
     VerificationToken findByToken(final String token);

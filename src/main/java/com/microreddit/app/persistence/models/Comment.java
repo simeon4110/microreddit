@@ -8,6 +8,8 @@ import org.springframework.data.cassandra.core.mapping.Table;
 
 /**
  * Model stores comment data. Query managed in CommentKey.class.
+ *
+ * @author Josh Harkema
  */
 @Table("comments")
 public class Comment {

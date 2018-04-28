@@ -8,6 +8,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
+/**
+ * Repo for grabbing user objects.
+ *
+ * @author Josh Harkema
+ */
 @Repository
 public interface UserRepository extends CassandraRepository<User, UserKey> {
     @Query(allowFiltering = true)

@@ -11,6 +11,8 @@ import java.util.UUID;
 
 /**
  * Stores tokens for self serve password resets.
+ *
+ * @author Josh Harkema
  */
 @Table("password_reset_token")
 public class PasswordResetToken {

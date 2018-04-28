@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  * User transfer object for moving data from GUI to db securely. Validates input data.
+ * :TODO: hook up the validators.
  *
  * @author Josh Harkema
  */

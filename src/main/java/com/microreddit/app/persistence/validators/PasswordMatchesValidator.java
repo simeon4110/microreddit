@@ -5,6 +5,11 @@ import com.microreddit.app.persistence.dto.UserDto;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+/**
+ * Ensures two passwords match.
+ *
+ * @author Josh Harkema
+ */
 public class PasswordMatchesValidator implements ConstraintValidator<PasswordMatches, Object> {
     @Override
     public void initialize(PasswordMatches constraintAnnotation) {

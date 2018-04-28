@@ -8,6 +8,8 @@ import org.springframework.data.cassandra.core.mapping.Table;
 
 /**
  * Defines message model.
+ *
+ * @author Josh Harkema
  */
 @Table("Messages")
 public class Message {

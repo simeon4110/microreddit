@@ -11,6 +11,8 @@ import java.util.UUID;
 
 /**
  * Model stores tokens to verify user email addresses.
+ *
+ * @author Josh Harkema
  */
 @Table("verification_tokens")
 public class VerificationToken {

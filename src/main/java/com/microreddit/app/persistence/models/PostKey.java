@@ -11,6 +11,8 @@ import java.util.UUID;
 
 /**
  * Key class implements cassandra primary key columns for fast post lookups.
+ *
+ * @author Josh Harkema
  */
 @PrimaryKeyClass
 public class PostKey implements Serializable {

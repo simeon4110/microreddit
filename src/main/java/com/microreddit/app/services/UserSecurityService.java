@@ -16,6 +16,11 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.UUID;
 
+/**
+ * This may be removed, I'm not sure it will be needed.
+ *
+ * @author Josh Harkema
+ */
 @Service
 @ComponentScan(basePackages = {"com.microreddit.app.persistence.repositories"})
 public class UserSecurityService {
