@@ -14,15 +14,10 @@ import org.springframework.context.MessageSource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.support.RequestContext;
-
-import javax.validation.Valid;
 
 /**
  * Main view controller for routing root unauthed HTTP requests. Serves the index and registration pages.
@@ -51,20 +46,28 @@ public class RegistrationController {
         this.authenticationManager = authenticationManager;
     }
 
-    @RequestMapping(value = "/user/registration", method = RequestMethod.GET)
-    public String showRegistrationForm(WebRequest request, Model model) {
-        UserDto userDto = new UserDto();
-        model.addAttribute("user", userDto);
+    @GetMapping("/user/registration")
+    public String showRegistrationForm() {
         return "registration";
     }
 
-    @RequestMapping(value = "/user/registration", method = RequestMethod.POST)
-    public String registerUserAccount(@ModelAttribute("user") @Valid UserDto accountDto, RequestContext request) {
-        LOGGER.debug("Registering user account with info {}", accountDto);
-        return "";
+    @PostMapping("/user/registration")
+    public String registerUserAccount(@RequestParam(name = "username", required = true) String username,
+                                      @RequestParam(name = "email", required = true) String email,
+                                      @RequestParam(name = "password", required = true) String password,
+                                      @RequestParam(name = "matchingPassword", required = true) String matchingPassword) {
+        UserDto accountDto = new UserDto();
+        accountDto.setUsername(username);
+        accountDto.setEmail(email);
+        accountDto.setPassword(password);
+        accountDto.setMatchingPassword(matchingPassword);
+        System.out.println("Registering user account with info {}" + accountDto);
+        createUserAccount(accountDto);
+
+        return "login";
     }
 
-    private User createUserAccount(UserDto accountDto, BindingResult result) {
+    private User createUserAccount(UserDto accountDto) {
         User registered;
         try {
             registered = userService.registerNewUserAccount(accountDto);

@@ -9,17 +9,18 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col">
+                <h1 class="display-4 pb-3" th:text="#{label.form.title}">Register</h1>
                 <p class="lead">
+                    <!--:TODO: needs a spanish translation-->
                     Registration is required to post and comment. We collect and verify email addresses for all
-                    registered
-                    users to slow down the rate of bot spam.
+                    registered users to slow down the rate of bot spam. You do not need an account to browse.
                 </p>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
-                <h4 class="display-6">Create an account:</h4>
-                <form action="/" method="POST" class="form mx-3">
+                <h4 class="display-7" th:text="#{label.form.top}">Create</h4>
+                <form action="/user/registration" method="POST" class="form mx-3">
                     <div class="form-group">
                         <label for="id_username" class="control-label" th:text="#{label.user.userName}">username</label>
                         <input type="text" id="id_username" class="form-control" name="username" value="" required
@@ -40,6 +41,7 @@
                                type="password" required/>
                     </div>
                     <br/>
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                     <button type="submit" class="btn btn-primary" th:text="#{label.form.submit}">submit</button>
                 </form>
             </div>

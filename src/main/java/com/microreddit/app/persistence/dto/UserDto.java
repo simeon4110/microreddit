@@ -1,6 +1,8 @@
 package com.microreddit.app.persistence.dto;
 
 import com.microreddit.app.persistence.validators.PasswordMatches;
+import com.microreddit.app.persistence.validators.ValidEmail;
+import com.microreddit.app.persistence.validators.ValidPassword;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -17,10 +19,12 @@ public class UserDto {
     @NotEmpty
     private String username;
 
+    @ValidEmail
     @NotNull
     @NotEmpty
     private String email;
 
+    @ValidPassword
     @NotNull
     @NotEmpty
     private String password;
