@@ -32,8 +32,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/user/registration").permitAll();
-//                .and()
-//            .csrf().disable();
     }
 
     @Bean
