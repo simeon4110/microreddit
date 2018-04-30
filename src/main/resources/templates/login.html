@@ -1,7 +1,7 @@
-<html>
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml" lang="en">
 <head>
+    <title>&micro;reddit - Login</title>
     <div th:replace="fragments/header :: head"></div>
 </head>
 <body>
@@ -15,7 +15,7 @@
         </div>
         <div class="row">
             <div class="col-md-6">
-                <form name="f" action="/do_login" method="POST" class="form mx-3">
+                <form name="f" action="/login" method="POST" class="form mx-3">
                     <div th:if="${param.error}" class="alert alert-danger" name="alert">
                         Invalid username and password.
                     </div>

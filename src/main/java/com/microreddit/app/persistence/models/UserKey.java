@@ -17,7 +17,7 @@ public class UserKey implements Serializable {
     @PrimaryKeyColumn(name = "user_key", type = PrimaryKeyType.PARTITIONED)
     private final UUID id;
 
-    @PrimaryKeyColumn(name = "user_name")
+    @PrimaryKeyColumn(name = "username")
     private final String userName;
 
     /**

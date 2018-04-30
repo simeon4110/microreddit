@@ -1,6 +1,5 @@
 package com.microreddit.app.config;
 
-import com.microreddit.app.Security.CustomAuthentication;
 import com.microreddit.app.services.UserDetailsServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -28,18 +27,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/user/registration/**").permitAll()
-                .antMatchers("/login/**").permitAll()
-                .antMatchers("/do_login/**").permitAll()
-                .antMatchers("/resources/**").permitAll()
-                .antMatchers("/browser/**").authenticated()
+                .antMatchers("/", "/user/registration").permitAll()
                 .antMatchers("/subs/**").authenticated()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login").failureUrl("/login?error").loginProcessingUrl("/do_login")
+                .loginPage("/login")
+                .permitAll()
                 .and()
-                .authenticationProvider(new CustomAuthentication(userDetailsService, encoder()))
                 .logout()
+                .logoutUrl("/logout")
                 .permitAll();
     }
 
@@ -61,6 +58,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(11);
         return encoder;
     }
-
-
 }

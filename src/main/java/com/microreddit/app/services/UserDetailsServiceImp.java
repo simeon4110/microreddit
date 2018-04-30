@@ -26,25 +26,29 @@ import java.util.UUID;
  */
 @Service
 public class UserDetailsServiceImp implements UserDetailsService {
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
+
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private RoleRepository roleRepository;
+    public UserDetailsServiceImp(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.roleRepository = roleRepository;
+    }
 
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        try {
-            final User user = userRepository.findByKey_UserName(username);
-            if (user == null) {
-                throw new UsernameNotFoundException("No user found with username: " + username);
-            }
-            return new AppUserPrincipal(user);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        User user = findUserByUsername(username);
+        if (user == null) {
+            throw new UsernameNotFoundException(username + " not found.");
         }
 
+        return new AppUserPrincipal(user);
+    }
+
+    private User findUserByUsername(String username) {
+        return userRepository.findByKey_UserName(username);
     }
 
     /**

@@ -1,7 +1,5 @@
 package com.microreddit.app.services;
 
-import com.microreddit.app.persistence.models.Privilege;
-import com.microreddit.app.persistence.models.Role;
 import com.microreddit.app.persistence.models.User;
 import com.microreddit.app.persistence.repositories.PrivilegeRepository;
 import com.microreddit.app.persistence.repositories.RoleRepository;
@@ -10,7 +8,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * POJO intermediary for user registration and authentication.
@@ -37,21 +38,7 @@ public class AppUserPrincipal implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         final List<GrantedAuthority> authorities = new ArrayList<>();
-        for (final UUID role : user.getRoles()) {
-            Optional<Role> found = roleRepository.findById(role);
-            if (found.isPresent()) {
-                Role r = found.get();
-                List<UUID> privileges = r.getPrivileges();
-                for (UUID p : privileges) {
-                    Optional<Privilege> foundp = privilegeRepository.findById(p);
-                    if (foundp.isPresent()) {
-                        Privilege privilege = foundp.get();
-                        authorities.add(new SimpleGrantedAuthority(privilege.getName()));
-                    }
-                }
-            }
-        }
-
+        authorities.add(new SimpleGrantedAuthority("USER"));
         return authorities;
     }
 

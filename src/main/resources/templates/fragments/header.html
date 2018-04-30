@@ -22,7 +22,7 @@
 
 <!--Navbar snippet-->
 <nav class="navbar fixed-top navbar-expand-md mb-4 bg-light" th:fragment="nav-bar">
-    <a class="navbar-brand" href="/">&micro;reddit</a>
+    <a class="navbar-brand ml-3" href="/">&micro;reddit</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
             aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="oi oi-menu"></span>
@@ -30,8 +30,11 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/user/registration">Register</a>
+                <a class="nav-link" th:href="@{/user/registration}" th:text="#{label.pages.register}">Register</a>
             </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right mr-3">
+            <a class="nav-link" th:href="@{/logout}" th:text="#{label.pages.logout}">Logout</a>
         </ul>
     </div>
 </nav>
@@ -53,7 +56,8 @@
 <div th:fragment="footer" class="mt-5">
     <hr class="mt-2" style="border-color: black"/>
     <p style="text-align: center">
-        WORK IN PROGRESS, TESTING PURPOSES ONLY. NOT PRODUCTION.
+        WORK IN PROGRESS, TESTING PURPOSES ONLY. NOT PRODUCTION. DO NOT TRY TO USE THIS SITE. IF YOU'VE FOUND IT
+        AND YOU'RE NOT DEVELOPING IT OR WORKING ON IT PLEASE DON'T BREAK ANYTHING.
     </p>
 </div>
 
