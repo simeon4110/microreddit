@@ -11,6 +11,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+/**
+ * Service for db operations on the Sub table.
+ *
+ * @author Josh Harkema
+ */
 @Service
 public class SubDetailsServiceImpl {
     private UserRepository userRepository;

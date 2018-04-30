@@ -29,6 +29,11 @@ public class AppUserPrincipal implements UserDetails {
     }
 
 
+    /**
+     * This is a mess because spring data is a disaster if your db doesn't store UDT's well.
+     *
+     * @return a collection of the user's authorities.
+     */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         final List<GrantedAuthority> authorities = new ArrayList<>();

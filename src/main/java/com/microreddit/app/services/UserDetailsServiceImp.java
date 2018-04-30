@@ -47,6 +47,11 @@ public class UserDetailsServiceImp implements UserDetailsService {
 
     }
 
+    /**
+     * @param username user to find.
+     * @return a UUID for the user with associated username.
+     * @throws UsernameNotFoundException self-explanatory.
+     */
     public UUID loadUserIdByUsername(String username) throws UsernameNotFoundException {
         try {
             User user = userRepository.findByKey_UserName(username);

@@ -1,5 +1,8 @@
 package com.microreddit.app.services.exceptions;
 
+/**
+ * @author Josh Harkema
+ */
 public class EmailAlreadyExistsException extends RuntimeException {
     public EmailAlreadyExistsException() {
         super();

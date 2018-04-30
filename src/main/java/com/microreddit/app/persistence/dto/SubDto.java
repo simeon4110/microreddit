@@ -1,5 +1,6 @@
 package com.microreddit.app.persistence.dto;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.UUID;
 
 /**
@@ -8,7 +9,9 @@ import java.util.UUID;
  * @author Josh Harkema
  */
 public class SubDto {
+    @NotEmpty
     private String name;
+    @NotEmpty
     private String title;
     private String description;
     private UUID creatorID;

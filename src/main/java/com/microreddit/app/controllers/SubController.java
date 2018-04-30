@@ -18,7 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 
 /**
- * Serves sub creation page and handles creation POST request.
+ * Serves sub creation page and handles creation POST request. :TODO: create a sub specific "front page" styled render.
  *
  * @author Josh Harkema
  */

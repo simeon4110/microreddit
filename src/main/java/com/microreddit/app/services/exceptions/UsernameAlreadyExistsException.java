@@ -1,8 +1,6 @@
 package com.microreddit.app.services.exceptions;
 
 /**
- * Probably don't need this anymore. I'll figure it out tomorrow.
- *
  * @author Josh Harkema
  */
 public final class UsernameAlreadyExistsException extends RuntimeException {

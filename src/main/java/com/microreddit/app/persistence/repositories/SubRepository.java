@@ -8,6 +8,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
+/**
+ * Repo for all sub data. Queries by compound key.
+ *
+ * @author Josh Harkema
+ */
 @Repository
 public interface SubRepository extends CassandraRepository<Sub, SubKey> {
     @Query
