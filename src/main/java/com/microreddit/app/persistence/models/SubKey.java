@@ -21,11 +21,10 @@ public class SubKey implements Serializable {
     private final String subName;
 
     /**
-     * @param id      a unique UUID.
      * @param subName a unique string to name the sub with.
      */
-    public SubKey(final UUID id, final String subName) {
-        this.id = id;
+    public SubKey(final String subName) {
+        this.id = UUID.randomUUID();
         this.subName = subName;
     }
 

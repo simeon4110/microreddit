@@ -17,12 +17,24 @@ import java.util.UUID;
  */
 @Table("subs")
 public class Sub {
+    @PrimaryKey
+    private final SubKey key;
     @Column("sub_creator_id")
     private final UUID creatorID; // the initial sub creator and first mod.
-    @PrimaryKey
-    private SubKey key;
     @Column("sub_description")
     private String description;
+    @Column("sub_title")
+    private String title;
+    @Column("sidebar")
+    private String sidebar;
+    @Column("submission_text")
+    private String submissionText;
+    @Column("language")
+    private String language;
+    @Column("sub_type")
+    private String subType;
+    @Column("content_option")
+    private String subContentOption;
     @Column("sub_css")
     private String customCSS;
     @Column("sub_moderators")
@@ -103,17 +115,75 @@ public class Sub {
         return moderators;
     }
 
-    /**
-     * @return a JSON formatted list of all sub data.
-     */
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getSidebar() {
+        return sidebar;
+    }
+
+    public void setSidebar(String sidebar) {
+        this.sidebar = sidebar;
+    }
+
+    public String getSubmissionText() {
+        return submissionText;
+    }
+
+    public void setSubmissionText(String submissionText) {
+        this.submissionText = submissionText;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public String getSubType() {
+        return subType;
+    }
+
+    public void setSubType(String subType) {
+        this.subType = subType;
+    }
+
+    public String getSubContentOption() {
+        return subContentOption;
+    }
+
+    public void setSubContentOption(String subContentOption) {
+        this.subContentOption = subContentOption;
+    }
+
+    public void setModerators(List<UUID> moderators) {
+        this.moderators = moderators;
+    }
+
+    public List<UUID> getBanned() {
+        return banned;
+    }
+
+    public void setBanned(List<UUID> banned) {
+        this.banned = banned;
+    }
+
     @Override
     public String toString() {
         return "Sub{" +
-                "key=" + key +
+                "creatorID=" + creatorID +
+                ", key=" + key +
                 ", description='" + description + '\'' +
-                ", customCSS='" + customCSS + '\'' +
-                ", creatorID=" + creatorID +
-                ", moderators=" + moderators +
+                ", title='" + title + '\'' +
+                ", language='" + language + '\'' +
+                ", subType=" + subType +
                 '}';
     }
 

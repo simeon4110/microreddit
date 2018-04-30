@@ -33,6 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/do_login/**").permitAll()
                 .antMatchers("/resources/**").permitAll()
                 .antMatchers("/browser/**").authenticated()
+                .antMatchers("/subs/**").authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login").failureUrl("/login?error").loginProcessingUrl("/do_login")

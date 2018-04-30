@@ -60,6 +60,10 @@ public class AppUserPrincipal implements UserDetails {
         return user.getKey().getUserName();
     }
 
+    public UUID getID() {
+        return user.getKey().getId();
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;

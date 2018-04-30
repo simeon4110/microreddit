@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <div th:replace="fragments/header :: head"></div>
+</head>
+<body>
+<main name="main" class="container">
+    <div th:replace="fragments/header :: nav-bar"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <h1 class="display-4 pb-3">Create New Sub</h1>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div th:if="${param.error}" class="alert alert-error">
+                    An error occurred.
+                </div>
+                <form th:action="@{/subs/create}" th:object="${SubDto}" method="POST" class="form mx-3">
+                    <div class="form-group">
+                        <label class="control-label">Name*</label>
+                        <input class="form-control" th:field="*{name}" autofocus/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Title</label>
+                        <input class="form-control" th:field="*{title}"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Description</label>
+                        <textarea rows="5" class="form-control" th:field="*{description}"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Side Bar</label>
+                        <textarea rows="5" class="form-control" th:field="*{sideBar}"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Submission Text</label>
+                        <textarea rows="5" class="form-control" th:field="*{submissionText}"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Language</label>
+                        <select class="form-control" th:field="*{language}">
+                            <option value="English">English</option>
+                            <option value="Spanish">Spanish</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Sub Type</label>
+                        <select class="form-control" th:field="*{type}">
+                            <option value="PUBLIC">Public</option>
+                            <option value="PRIVATE">Private</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Allowed Post Types</label>
+                        <select class="form-control" th:field="*{contentOption}">
+                            <option value="ANY">Any</option>
+                            <option value="LINKS_ONLY">Links Only</option>
+                            <option value="TEXT_ONLY">Text Only</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Custom CSS</label>
+                        <textarea rows="5" class="form-control" th:field="*{customCSS}"></textarea>
+                    </div>
+                    <br/>
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    <button type="submit" class="btn btn-primary" th:text="#{label.form.submit}">submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div th:replace="fragments/header :: footer"></div>
+    <div th:replace="fragments/header :: scripts"></div>
+</main>
+</body>

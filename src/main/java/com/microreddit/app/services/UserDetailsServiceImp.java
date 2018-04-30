@@ -47,6 +47,19 @@ public class UserDetailsServiceImp implements UserDetailsService {
 
     }
 
+    public UUID loadUserIdByUsername(String username) throws UsernameNotFoundException {
+        try {
+            User user = userRepository.findByKey_UserName(username);
+            if (user == null) {
+                throw new UsernameNotFoundException("No user found with username: " + username);
+            }
+
+            return user.getKey().getId();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public User registerNewUserAccount(UserDto newUser) throws UsernameAlreadyExistsException {
         System.out.println("registering...");
         if (userRepository.findByKey_UserName(newUser.getUsername()) != null) {

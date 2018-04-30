@@ -16,13 +16,15 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 /**
- * Inputs default data when the db is wiped or the testing server is restarted.
+ * Inputs default data when the db is wiped or the testing server is restarted. Only run this once, it doesn't
+ * do any validation and will just keep loading the same user into the db, breaking the build.
  *
  * @author Josh Harkema.
  */
 @Component
 public class InitialDataLoader implements ApplicationListener<ContextRefreshedEvent> {
-    private boolean alreadySetup = true;
+    private boolean alreadySetup = false; // change this to false to add test data.
+
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private PrivilegeRepository privilegeRepository;

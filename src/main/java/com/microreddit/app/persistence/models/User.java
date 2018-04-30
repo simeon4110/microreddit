@@ -58,10 +58,6 @@ public class User {
         this.key = key;
         this.commentKarma = 0;
         this.postKarma = 0;
-        this.roles = new ArrayList<>();
-        this.subs = new ArrayList<>();
-        this.blocked = new ArrayList<>();
-        this.friends = new ArrayList<>();
     }
 
     public String getEmail() {
@@ -73,6 +69,10 @@ public class User {
     }
 
     public void addSub(UUID sub) {
+        if (this.subs == null) {
+            this.subs = new ArrayList<>();
+        }
+
         this.subs.add(sub);
     }
 
@@ -81,6 +81,10 @@ public class User {
     }
 
     public void addBlocked(UUID user) {
+        if (this.blocked == null) {
+            this.blocked = new ArrayList<>();
+        }
+
         this.blocked.add(user);
     }
 
@@ -89,6 +93,10 @@ public class User {
     }
 
     public void addFriend(UUID user) {
+        if (this.friends == null) {
+            this.friends = new ArrayList<>();
+        }
+
         this.friends.add(user);
     }
 
