@@ -9,7 +9,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col">
-                <h1 class="display-4 pb-3">Create New Sub</h1>
+                <h1 class="display-4 pb-3" th:text="#{label.sub.pageTitle}">Create a New Sub</h1>
             </div>
         </div>
         <div class="row justify-content-center">
@@ -19,49 +19,49 @@
                 </div>
                 <form th:action="@{/subs/create}" th:object="${SubDto}" method="POST" class="form mx-3">
                     <div class="form-group">
-                        <label class="control-label">Name*</label>
+                        <label class="control-label" th:text="#{label.sub.name}">Name*</label>
                         <input class="form-control" th:field="*{name}" autofocus required/>
                     </div>
                     <div class="form-group">
-                        <label class="control-label">Title*</label>
+                        <label class="control-label" th:text="#{label.sub.title}">Title*</label>
                         <input class="form-control" th:field="*{title}" required/>
                     </div>
                     <div class="form-group">
-                        <label class="control-label">Description</label>
+                        <label class="control-label" th:text="#{label.sub.description}">Description</label>
                         <textarea rows="5" class="form-control" th:field="*{description}"></textarea>
                     </div>
                     <div class="form-group">
-                        <label class="control-label">Side Bar</label>
+                        <label class="control-label" th:text="#{label.sub.sideBar}">Side Bar</label>
                         <textarea rows="5" class="form-control" th:field="*{sideBar}"></textarea>
                     </div>
                     <div class="form-group">
-                        <label class="control-label">Submission Text</label>
+                        <label class="control-label" th:text="#{label.sub.submissionText}">Submission Text</label>
                         <textarea rows="5" class="form-control" th:field="*{submissionText}"></textarea>
                     </div>
                     <div class="form-group">
-                        <label class="control-label">Language</label>
+                        <label class="control-label" th:text="#{label.sub.language}">Language</label>
                         <select class="form-control" th:field="*{language}">
-                            <option value="English">English</option>
-                            <option value="Spanish">Spanish</option>
+                            <option value="English" th:text="#{options.sub.english}">English</option>
+                            <option value="Spanish" th:text="#{options.sub.spanish}">Spanish</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label class="control-label">Sub Type</label>
+                        <label class="control-label" th:text="#{label.sub.subType}">Sub Type</label>
                         <select class="form-control" th:field="*{type}">
-                            <option value="PUBLIC">Public</option>
-                            <option value="PRIVATE">Private</option>
+                            <option value="PUBLIC" th:text="#{options.sub.public}">Public</option>
+                            <option value="PRIVATE" th:text="#{options.sub.private}">Private</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label class="control-label">Allowed Post Types</label>
+                        <label class="control-label" th:text="#{label.sub.allowed}">Allowed Post Types</label>
                         <select class="form-control" th:field="*{contentOption}">
-                            <option value="ANY">Any</option>
-                            <option value="LINKS_ONLY">Links Only</option>
-                            <option value="TEXT_ONLY">Text Only</option>
+                            <option value="ANY" th:text="#{options.sub.any}">Any</option>
+                            <option value="LINKS_ONLY" th:text="#{options.sub.linksOnly}">Links Only</option>
+                            <option value="TEXT_ONLY" th:text="#{options.sub.textOnly}">Text Only</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label class="control-label">Custom CSS</label>
+                        <label class="control-label" th:text="#{label.sub.customCSS}">Custom CSS</label>
                         <textarea rows="5" class="form-control" th:field="*{customCSS}"></textarea>
                     </div>
                     <br/>
