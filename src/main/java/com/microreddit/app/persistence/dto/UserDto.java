@@ -9,7 +9,6 @@ import javax.validation.constraints.NotNull;
 
 /**
  * User transfer object for moving data from GUI to db securely. Validates input data.
- * :TODO: hook up the validators.
  *
  * @author Josh Harkema
  */
@@ -58,7 +57,14 @@ public class UserDto {
         return matchingPassword;
     }
 
-    public void setMatchingPassword(String matchingPassword) {
-        this.matchingPassword = matchingPassword;
+    @Override
+    public String toString() {
+        return "UserDto{" +
+                "username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", matchingPassword='" + matchingPassword + '\'' +
+                '}';
     }
+
 }

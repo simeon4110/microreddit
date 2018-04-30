@@ -9,7 +9,7 @@ import java.util.UUID;
 import java.util.stream.Stream;
 
 /**
- * Repo for grabbing verification tokens.
+ * Repo for grabbing verification tokens. Not hooked up now. :TODO: hook this up.
  *
  * @author Josh Harkema
  */

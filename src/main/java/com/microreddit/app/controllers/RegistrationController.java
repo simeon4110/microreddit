@@ -2,69 +2,49 @@ package com.microreddit.app.controllers;
 
 import com.microreddit.app.persistence.dto.UserDto;
 import com.microreddit.app.persistence.models.User;
-import com.microreddit.app.services.AppUserDetailsService;
-import com.microreddit.app.services.UserSecurityService;
+import com.microreddit.app.services.UserDetailsServiceImp;
 import com.microreddit.app.services.exceptions.UsernameAlreadyExistsException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.context.MessageSource;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.support.RequestContext;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
 
 /**
- * Main view controller for routing root unauthed HTTP requests. Serves the index and registration pages.
+ * Serves registration pages and deals with registration POST requests.
  *
  * @author Josh Harkema
  */
 @Controller
 public class RegistrationController {
-    private final Logger LOGGER = LoggerFactory.getLogger(getClass());
-    private final AppUserDetailsService userService;
-    private final UserSecurityService securityService;
-    private final MessageSource messages;
-    private final JavaMailSender mailSender;
-    private final ApplicationEventPublisher eventPublisher;
-    private final AuthenticationManager authenticationManager;
+    private final UserDetailsServiceImp userService;
 
     @Autowired
-    public RegistrationController(AppUserDetailsService userService, UserSecurityService securityService,
-                                  @Qualifier("messageSource") MessageSource messages, JavaMailSender mailSender,
-                                  ApplicationEventPublisher eventPublisher, AuthenticationManager authenticationManager) {
+    public RegistrationController(UserDetailsServiceImp userService) {
         this.userService = userService;
-        this.securityService = securityService;
-        this.messages = messages;
-        this.mailSender = mailSender;
-        this.eventPublisher = eventPublisher;
-        this.authenticationManager = authenticationManager;
     }
 
     @GetMapping("/user/registration")
-    public String showRegistrationForm() {
+    public String showRegistrationForm(Model model) {
+        model.addAttribute("UserDto", new UserDto());
         return "registration";
     }
 
     @PostMapping("/user/registration")
-    public String registerUserAccount(@RequestParam(name = "username", required = true) String username,
-                                      @RequestParam(name = "email", required = true) String email,
-                                      @RequestParam(name = "password", required = true) String password,
-                                      @RequestParam(name = "matchingPassword", required = true) String matchingPassword) {
-        UserDto accountDto = new UserDto();
-        accountDto.setUsername(username);
-        accountDto.setEmail(email);
-        accountDto.setPassword(password);
-        accountDto.setMatchingPassword(matchingPassword);
-        System.out.println("Registering user account with info {}" + accountDto);
-        createUserAccount(accountDto);
+    public ModelAndView registerUserAccount(@ModelAttribute("UserDto") @Valid UserDto accountDto,
+                                            BindingResult result, WebRequest request, Errors errors) {
 
-        return "login";
+        System.out.println("Registering..." + accountDto.toString());
+        User registered = createUserAccount(accountDto);
+
+        return new ModelAndView("login", "user", accountDto);
     }
 
     private User createUserAccount(UserDto accountDto) {
@@ -76,9 +56,5 @@ public class RegistrationController {
         }
 
         return registered;
-    }
-
-    private String getAppUrl(RequestContext request) {
-        return "http://" + "127.0.0.1" + ":" + "8080" + request.getContextPath();
     }
 }

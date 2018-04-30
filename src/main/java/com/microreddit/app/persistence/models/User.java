@@ -35,8 +35,9 @@ public class User {
     @Column("enabled")
     private boolean isEnabled;
 
-    @Column("is_admin")
-    private boolean isAdmin;
+    @Column("roles")
+    @CassandraType(type = DataType.Name.LIST, typeArguments = DataType.Name.UUID)
+    private List<UUID> roles;
 
     @Column("subs")
     @CassandraType(type = DataType.Name.LIST, typeArguments = DataType.Name.UUID)
@@ -57,7 +58,7 @@ public class User {
         this.key = key;
         this.commentKarma = 0;
         this.postKarma = 0;
-        this.isAdmin = false;
+        this.roles = new ArrayList<>();
         this.subs = new ArrayList<>();
         this.blocked = new ArrayList<>();
         this.friends = new ArrayList<>();
@@ -69,14 +70,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public boolean getAdmin() {
-        return this.isAdmin;
-    }
-
-    public void setAdmin(boolean isAdmin) {
-        this.isAdmin = isAdmin;
     }
 
     public void addSub(UUID sub) {
@@ -135,8 +128,20 @@ public class User {
         this.password = password;
     }
 
+    public boolean isEnabled() {
+        return isEnabled;
+    }
+
     public void setEnabled(boolean enabled) {
         this.isEnabled = enabled;
+    }
+
+    public List<UUID> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<UUID> roles) {
+        this.roles = roles;
     }
 
     @Override
