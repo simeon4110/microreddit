@@ -39,13 +39,15 @@
         </ul>
         <ul class="nav navbar-nav navbar-right mr-3">
             <li class="nav-item" sec:authorize="isAuthenticated()">
-                <a class="nav-link" th:href="@{/logout}" th:text="#{label.pages.logout}">Logout</a>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="btn btn-primary" th:text="#{label.pages.logout}">Logout</button>
+                </form>
             </li>
             <li class="nav-item" sec:authorize="isAnonymous()">
                 <a class="nav-link" th:href="@{/login}" th:text="#{label.form.loginTitle}">Login</a>
             </li>
             <li class="nav-item" sec:authorize="isAnonymous()">
-                <a class="nav-link" th:href="@{/user/registration}" th:text="#{label.pages.register}">Register</a>
+                <a class="nav-link" th:href="@{/user/registration}" th:value="#{label.pages.register}">Register</a>
             </li>
         </ul>
     </div>

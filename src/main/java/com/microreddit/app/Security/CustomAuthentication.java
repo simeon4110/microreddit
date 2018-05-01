@@ -1,6 +1,6 @@
 package com.microreddit.app.Security;
 
-import com.microreddit.app.services.UserDetailsServiceImp;
+import com.microreddit.app.services.UserDetailsServiceImpl;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,10 +18,10 @@ import java.util.Collections;
  * @author Josh Harkema
  */
 public class CustomAuthentication implements AuthenticationProvider {
-    private final UserDetailsServiceImp userDetailsService;
+    private final UserDetailsServiceImpl userDetailsService;
     private final PasswordEncoder passwordEncoder;
 
-    public CustomAuthentication(UserDetailsServiceImp userDetailsService, PasswordEncoder passwordEncoder) {
+    public CustomAuthentication(UserDetailsServiceImpl userDetailsService, PasswordEncoder passwordEncoder) {
         this.userDetailsService = userDetailsService;
         this.passwordEncoder = passwordEncoder;
     }

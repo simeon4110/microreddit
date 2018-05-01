@@ -3,7 +3,7 @@ package com.microreddit.app.controllers;
 import com.microreddit.app.persistence.dto.SubDto;
 import com.microreddit.app.persistence.models.Sub;
 import com.microreddit.app.services.SubDetailsServiceImpl;
-import com.microreddit.app.services.UserDetailsServiceImp;
+import com.microreddit.app.services.UserDetailsServiceImpl;
 import com.microreddit.app.services.exceptions.SubAlreadyExistsException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,9 +25,9 @@ import javax.validation.Valid;
 @Controller
 public class SubController {
     private final SubDetailsServiceImpl subDetailsService;
-    private final UserDetailsServiceImp userDetailsService;
+    private final UserDetailsServiceImpl userDetailsService;
 
-    public SubController(SubDetailsServiceImpl subDetailsService, UserDetailsServiceImp userDetailsService) {
+    public SubController(SubDetailsServiceImpl subDetailsService, UserDetailsServiceImpl userDetailsService) {
         this.subDetailsService = subDetailsService;
         this.userDetailsService = userDetailsService;
     }

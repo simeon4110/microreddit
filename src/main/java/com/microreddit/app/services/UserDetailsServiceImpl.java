@@ -25,7 +25,7 @@ import java.util.UUID;
  * @author Josh Harkema
  */
 @Service
-public class UserDetailsServiceImp implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
     @Autowired

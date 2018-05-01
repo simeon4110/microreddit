@@ -2,7 +2,7 @@ package com.microreddit.app.controllers;
 
 import com.microreddit.app.persistence.dto.UserDto;
 import com.microreddit.app.persistence.models.User;
-import com.microreddit.app.services.UserDetailsServiceImp;
+import com.microreddit.app.services.UserDetailsServiceImpl;
 import com.microreddit.app.services.exceptions.UsernameAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,10 +24,10 @@ import javax.validation.Valid;
  */
 @Controller
 public class RegistrationController {
-    private final UserDetailsServiceImp userService;
+    private final UserDetailsServiceImpl userService;
 
     @Autowired
-    public RegistrationController(UserDetailsServiceImp userService) {
+    public RegistrationController(UserDetailsServiceImpl userService) {
         this.userService = userService;
     }
 
