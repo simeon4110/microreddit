@@ -2,6 +2,10 @@
 Building out a Reddit themed Java Spring Boot application to save the Reddit we all love before it turns into a 
 mainstream social network. We are in the early days (as you can see from the source,) but progressing steadily.
 
+Follow our development progress on the public test server at [https://ureddit.org](https://ureddit.org). The server is
+periodically updated with working builds. Feel free to use it, but the data gets wiped each time the db model is changed
+(almost daily at this stage.)
+
 # Help Wanted
 We need java devs of all skill levels (from undergrad to retired engineer) to join the project. Spring Boot, REST,
 thymeleaf, Python (for connectors,) cassandra, redis, UX, UI, security, etc., are all skills we can use. If you're
