@@ -26,7 +26,8 @@ good.
 the OAuth REST server and HTTP front end. 
 4) No gimmicks. Basic features and a lightweight front-end are our guiding design principles. We're not building a 
 social network, there are too many of those as it is. The purpose of this site is to retain the features and
-functionality of Reddit c. 2017--the only 'new' additions are the increased privacy measures.
+functionality of Reddit c. 2017--the only 'new' additions are the increased privacy measures and the 'live' post page
+websockets. 
 5) User built, user funded, user focused. &micro;reddit is not a for profit venture.
 6) Anonymous, but accountable. User's can post anonymously (from a registered account,) but anonymous user's can still
 be banned from a sub. All user's must provide a verified email address for the sole purpose of preventing API abuse 
