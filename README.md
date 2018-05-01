@@ -1,6 +1,16 @@
 # This is a work in progress.
 Building out a Reddit themed Java Spring Boot application to save the Reddit we all love before it turns into a mainstream social network. We are in the early days (as you can see from the source,) but progressing steadily.
 
+### Fundamental Principles
+1) Privacy first. Built in comment / post / account purge with auto-scheduler features.
+2) API first. The front-end website is ancillary to the REST controller. RESTful everything.
+3) Anonymity guaranteed. No tracking allowed; the only exception to this is session tracking for user authentication on
+the OAuth REST server and HTTP front end. 
+4) No gimmicks. Basic features and a lightweight front-end are our guiding design principles. We're not building a 
+social network, there are too many of those as it is. The purpose of this site is to retain the features and
+functionality of Reddit c. 2017--the only 'new' additions are the increased privacy measures.
+5) User built, user funded, user focused. &micro;reddit is not a for profit venture.
+
 ### Basic guidelines:
 - Cheap. Everything must run at the lowest possible CPU/RAM use. We are designing everything to run in a 'serverless' arch.
 - Everything FOSS. Java is a bit of a mess for this right now, but we will figure it out later.
