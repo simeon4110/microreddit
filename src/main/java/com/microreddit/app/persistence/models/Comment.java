@@ -1,7 +1,5 @@
 package com.microreddit.app.persistence.models;
 
-import org.jsoup.Jsoup;
-import org.jsoup.safety.Whitelist;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
@@ -14,7 +12,7 @@ import org.springframework.data.cassandra.core.mapping.Table;
 @Table("comments")
 public class Comment {
     @Column("comment_user")
-    private final String userName;
+    private String userName;
     @PrimaryKey
     private CommentKey key;
     @Column("comment_text")
@@ -24,13 +22,9 @@ public class Comment {
 
     /**
      * @param key      unique CommentKey.class object.
-     * @param text     the comment text.
-     * @param userName the poster's username.
      */
-    public Comment(final CommentKey key, final String text, final String userName) {
+    public Comment(final CommentKey key) {
         this.key = key;
-        this.text = Jsoup.clean(text, Whitelist.simpleText());
-        this.userName = userName;
         this.karma = 0;
     }
 
@@ -50,8 +44,20 @@ public class Comment {
         }
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public CommentKey getKey() {
         return key;
+    }
+
+    public void setKey(CommentKey key) {
+        this.key = key;
     }
 
     public String getText() {
@@ -62,23 +68,20 @@ public class Comment {
         this.text = text;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
     public int getKarma() {
         return karma;
     }
 
-    /**
-     * @return a lovely JSON styled string of all comment data.
-     */
+    public void setKarma(int karma) {
+        this.karma = karma;
+    }
+
     @Override
     public String toString() {
         return "Comment{" +
-                "key=" + key +
+                "userName='" + userName + '\'' +
+                ", key=" + key +
                 ", text='" + text + '\'' +
-                ", userName='" + userName + '\'' +
                 ", karma=" + karma +
                 '}';
     }

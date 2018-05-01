@@ -18,13 +18,10 @@ import java.util.UUID;
 public class PostKey implements Serializable {
     @PrimaryKeyColumn(name = "post_id", type = PrimaryKeyType.PARTITIONED)
     private final UUID id;
-
     @PrimaryKeyColumn(name = "user_id")
     private final UUID userID;
-
     @PrimaryKeyColumn(name = "sub_id")
     private final UUID subID;
-
     @PrimaryKeyColumn(name = "post_date", ordering = Ordering.DESCENDING)
     private final String timeStamp;
 
@@ -60,11 +57,12 @@ public class PostKey implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        PostKey postKey = (PostKey) o;
+        PostKey key = (PostKey) o;
 
-        if (!id.equals(postKey.id)) return false;
-        if (!userID.equals(postKey.userID)) return false;
-        return subID.equals(postKey.subID);
+        if (!id.equals(key.id)) return false;
+        if (!userID.equals(key.userID)) return false;
+        if (!subID.equals(key.subID)) return false;
+        return timeStamp.equals(key.timeStamp);
     }
 
     @Override
@@ -72,12 +70,10 @@ public class PostKey implements Serializable {
         int result = id.hashCode();
         result = 31 * result + userID.hashCode();
         result = 31 * result + subID.hashCode();
+        result = 31 * result + timeStamp.hashCode();
         return result;
     }
 
-    /**
-     * @return a JSON formatted string of all the post data.
-     */
     @Override
     public String toString() {
         return "PostKey{" +

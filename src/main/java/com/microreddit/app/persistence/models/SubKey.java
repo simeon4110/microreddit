@@ -16,13 +16,9 @@ import java.util.UUID;
 public class SubKey implements Serializable {
     @PrimaryKeyColumn(name = "sub_id", type = PrimaryKeyType.PARTITIONED)
     private final UUID id;
-
     @PrimaryKeyColumn(name = "sub_name")
     private final String subName;
 
-    /**
-     * @param subName a unique string to name the sub with.
-     */
     public SubKey(final String subName) {
         this.id = UUID.randomUUID();
         this.subName = subName;
@@ -54,9 +50,6 @@ public class SubKey implements Serializable {
         return result;
     }
 
-    /**
-     * @return a JSON formatted string of all sub related data.
-     */
     @Override
     public String toString() {
         return "SubKey{" +

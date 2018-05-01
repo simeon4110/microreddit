@@ -20,34 +20,25 @@ import java.util.UUID;
 public class User implements Serializable {
     @PrimaryKey
     private final UserKey key;
-
     @Column("email")
     private String email;
-
     @Column("comment_karma")
     private int commentKarma;
-
     @Column("post_karma")
     private int postKarma;
-
     @Column("password")
     private String password;
-
     @Column("enabled")
     private boolean isEnabled;
-
     @Column("roles")
     @CassandraType(type = DataType.Name.LIST, typeArguments = DataType.Name.UUID)
     private List<UUID> roles;
-
     @Column("subs")
     @CassandraType(type = DataType.Name.LIST, typeArguments = DataType.Name.UUID)
     private List<UUID> subs;
-
     @Column("blocked")
     @CassandraType(type = DataType.Name.LIST, typeArguments = DataType.Name.UUID)
     private List<UUID> blocked;
-
     @Column("friends")
     @CassandraType(type = DataType.Name.LIST, typeArguments = DataType.Name.UUID)
     private List<UUID> friends;

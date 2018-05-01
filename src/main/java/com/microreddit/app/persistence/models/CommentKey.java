@@ -18,27 +18,22 @@ import java.util.UUID;
 public class CommentKey implements Serializable {
     @PrimaryKeyColumn(name = "comment_key", type = PrimaryKeyType.PARTITIONED)
     private final UUID id;
-
     @PrimaryKeyColumn(name = "post_id")
     private final UUID postID;
-
     @PrimaryKeyColumn(name = "user_id")
     private final UUID userID;
-
     @PrimaryKeyColumn(name = "comment_parent")
     private final UUID commentParent;
-
     @PrimaryKeyColumn(name = "comment_date", ordering = Ordering.DESCENDING)
     private final String timeStamp;
 
     /**
-     * @param id              a unique UUID.
      * @param postID          the UUID of the post to add comment to.
      * @param userID          the UUID of the user posting the comment.
      * @param parentCommentID the parent comment's UUID (UUID(0, 0) if comment is TL).
      */
-    public CommentKey(final UUID id, final UUID postID, final UUID userID, final UUID parentCommentID) {
-        this.id = id;
+    public CommentKey(final UUID postID, final UUID userID, final UUID parentCommentID) {
+        this.id = UUID.randomUUID();
         this.postID = postID;
         this.userID = userID;
         this.commentParent = parentCommentID;
@@ -89,9 +84,6 @@ public class CommentKey implements Serializable {
         return result;
     }
 
-    /**
-     * @return a JSON formatted string of all the comment data.
-     */
     @Override
     public String toString() {
         return "CommentKey{" +

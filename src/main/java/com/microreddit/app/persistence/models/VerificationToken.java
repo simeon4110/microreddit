@@ -5,6 +5,7 @@ import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
 import org.springframework.data.cassandra.core.mapping.Table;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
@@ -15,18 +16,14 @@ import java.util.UUID;
  * @author Josh Harkema
  */
 @Table("verification_tokens")
-public class VerificationToken {
+public class VerificationToken implements Serializable {
     private static final int EXPIRATION = 60 * 24;
-
     @PrimaryKeyColumn(name = "id", type = PrimaryKeyType.PARTITIONED)
     private UUID id;
-
     @Column("token")
     private String token;
-
     @Column("user_id")
     private UUID userID;
-
     @Column("expiry_date")
     private Date expiryDate;
 

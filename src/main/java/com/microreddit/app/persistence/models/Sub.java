@@ -40,7 +40,6 @@ public class Sub {
     @Column("sub_moderators")
     @CassandraType(type = DataType.Name.LIST, typeArguments = DataType.Name.UUID)
     private List<UUID> moderators;
-
     @Column("sub_banned")
     @CassandraType(type = DataType.Name.LIST, typeArguments = DataType.Name.UUID)
     private List<UUID> banned;
@@ -54,15 +53,17 @@ public class Sub {
         this.key = key;
         this.description = description;
         this.creatorID = creatorID;
-        this.moderators = new ArrayList<>();
         this.moderators.add(creatorID);
-        this.banned = new ArrayList<>();
     }
 
     /**
      * @param userID UUID of mod to add.
      */
     public void addModerator(UUID userID) {
+        if (this.moderators == null) {
+            this.moderators = new ArrayList<>();
+        }
+
         this.moderators.add(userID);
     }
 
@@ -77,6 +78,10 @@ public class Sub {
      * @param userID UUID of user to ban.
      */
     public void addBan(UUID userID) {
+        if (this.banned == null) {
+            this.banned = new ArrayList<>();
+        }
+
         this.banned.add(userID);
     }
 

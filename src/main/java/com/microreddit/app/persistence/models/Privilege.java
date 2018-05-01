@@ -6,6 +6,7 @@ import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,12 +16,11 @@ import java.util.UUID;
  * @author Josh Harkema
  */
 @Table("privilege")
-public class Privilege {
+public class Privilege implements Serializable {
     @PrimaryKey
     private final UUID id;
     @Column
     private String name;
-
     @CassandraType(type = Name.LIST, typeArguments = Name.UUID)
     @Column
     private List<UUID> roles;

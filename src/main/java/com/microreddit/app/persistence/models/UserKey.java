@@ -16,14 +16,9 @@ import java.util.UUID;
 public class UserKey implements Serializable {
     @PrimaryKeyColumn(name = "user_key", type = PrimaryKeyType.PARTITIONED)
     private final UUID id;
-
     @PrimaryKeyColumn(name = "username")
     private final String userName;
 
-    /**
-     * @param id       a unique UUID.
-     * @param userName a unique username. :TODO: verify username's are unique.
-     */
     public UserKey(final UUID id, final String userName) {
         this.id = id;
         this.userName = userName;
@@ -55,9 +50,6 @@ public class UserKey implements Serializable {
         return result;
     }
 
-    /**
-     * @return JSON formatted string of all user data.
-     */
     @Override
     public String toString() {
         return "UserKey{" +
@@ -65,4 +57,5 @@ public class UserKey implements Serializable {
                 ", userName='" + userName + '\'' +
                 '}';
     }
+
 }

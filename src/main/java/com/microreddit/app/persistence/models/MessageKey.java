@@ -18,23 +18,19 @@ import java.util.UUID;
 public class MessageKey implements Serializable {
     @PrimaryKeyColumn(name = "message_key", type = PrimaryKeyType.PARTITIONED)
     private final UUID id;
-
     @PrimaryKeyColumn(name = "message_sender")
     private final UUID senderID;
-
     @PrimaryKeyColumn(name = "message_receiver")
     private final UUID receiverID;
-
     @PrimaryKeyColumn(name = "message_date", ordering = Ordering.DESCENDING)
     private final String timeStamp;
 
     /**
-     * @param id         UUID for message.
      * @param senderID   UUID of message sender.
      * @param receiverID UUID of message receiver.
      */
     public MessageKey(final UUID id, final UUID senderID, final UUID receiverID) {
-        this.id = id;
+        this.id = UUID.randomUUID();
         this.senderID = senderID;
         this.receiverID = receiverID;
         this.timeStamp = new Timestamp(System.currentTimeMillis()).toString();
@@ -72,9 +68,6 @@ public class MessageKey implements Serializable {
         return result;
     }
 
-    /**
-     * @return a JSON formatted string of all the message data.
-     */
     @Override
     public String toString() {
         return "MessageKey{" +
