@@ -5,17 +5,18 @@ mainstream social network. We are in the early days (as you can see from the sou
 # Help Wanted
 We need java devs of all skill levels (from undergrad to retired engineer) to join the project. Spring Boot, REST,
 thymeleaf, Python (for connectors,) cassandra, redis, UX, UI, security, etc., are all skills we can use. If you're
-looking for somewhere to take a crack at working on a big project, this is you're chance.
+looking for somewhere to take a crack at working on a big project, this is your chance.
 
 Only collaborators (eh, comrades?) can contribute, but anyone who asks will be added. No proof of experience needed, 
-and no shame in screwing something up.
+and no shame in screwing something up--we all had to learn somewhere and a repo can always be rolled back.
 
-email: jharkema@protonmail.com and introduce yourself. Look under "Issues" in the menu to see what's being worked on
-right now to see if our current tasks are something you're interested in. Feel free to make feature suggestions, but
-be prepared to implement them yourself. 
+email: [jharkema@protonmail.com](mailto:jharkema@protonmail.com) and introduce yourself. Look under "Issues" in the menu 
+to see what's being worked on right now to see if our current tasks are something you're interested in. Feel free to 
+make feature suggestions, but be prepared to implement them yourself. 
 
-### Fundamental Principles
-1) Privacy first. Built in comment / post / account purge with auto-scheduler features.
+### Fundamental Principles:
+1) Privacy first. Built in comment / post / account purge with auto-scheduler features. Once it's gone, it's gone for
+good.
 2) API first. The front-end website is ancillary to the REST controller. RESTful everything.
 3) Anonymity guaranteed. No tracking allowed; the only exception to this is session tracking for user authentication on
 the OAuth REST server and HTTP front end. 
@@ -27,6 +28,8 @@ functionality of Reddit c. 2017--the only 'new' additions are the increased priv
 be banned from a sub. All user's must provide a verified email address for the sole purpose of preventing API abuse 
 (i.e. the state of Reddit today.) Anonymity is important, but integrity of discourse is equally important. It will
 require a lot of fine tuning to get this right.
+7) Mod tools are king. Good mods make good subs, good subs make good content, good content is why we're building this
+thing in the first place.
 
 *The Golden Rule* - Everything is subject to change, if something doesn't work, we will change it.
 
@@ -42,16 +45,3 @@ devs. Python can be used for 'glue' or other misc needs.
 - We will build it and then we will figure out the finer rules of the platform. Josh has some ideas on how this is going 
 to work, but we must build something before we can devolve into arguing about how 'x' type of conflict will be resolved 
 or how 'x' type of sub will be moderated.
-
-### Things we could use help with right now:
-- Front-end GUI design (views).
-- People with API testing experience.
-- Cassandra engineers.
-- Online champions for our cause.
-
-### Things we have on the go:
-- Building a working and fast Cassandra DB model in Spring Boot (about 75% prototyped).
-- Building a working API interface to interact with the DB (about 25% prototyped).
-
-We have received a pretty substantial hosting 'allowance' to launch the initial site. Details around funding will be 
-solved after we have something to cost out.
