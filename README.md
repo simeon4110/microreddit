@@ -4,7 +4,7 @@ mainstream social network. We are in the early days (as you can see from the sou
 
 # Help Wanted
 We need java devs of all skill levels (from undergrad to retired engineer) to join the project. Spring Boot, REST,
-thymeleaf, Python (for connectors,) cassandra, redis, UX, UI, security, etc., are all the skills you need. If you're
+thymeleaf, Python (for connectors,) cassandra, redis, UX, UI, security, etc., are all skills we can use. If you're
 looking for somewhere to take a crack at working on a big project, this is you're chance.
 
 Only collaborators (eh, comrades?) can contribute, but anyone who asks will be added. No proof of experience needed, 
