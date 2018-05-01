@@ -29,12 +29,11 @@ public class PostKey implements Serializable {
     private final String timeStamp;
 
     /**
-     * @param id     a unique UUID.
      * @param userID the UUID of the user submitting the post.
      * @param subID  the UUID of the sub the post is submitted to.
      */
-    public PostKey(final UUID id, final UUID userID, final UUID subID) {
-        this.id = id;
+    public PostKey(final UUID userID, final UUID subID) {
+        this.id = UUID.randomUUID();
         this.userID = userID;
         this.subID = subID;
         this.timeStamp = new Timestamp(System.currentTimeMillis()).toString();

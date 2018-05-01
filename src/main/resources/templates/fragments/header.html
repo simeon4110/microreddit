@@ -31,7 +31,10 @@
         <ul class="navbar-nav mr-auto">
             <!--sec:authorize tags are used to render links specific to the user's login status-->
             <li class="nav-item" sec:authorize="isAuthenticated()">
-                <a class="nav-link" th:href="@{/subs/create}" th:text="#{label.sub.pageTitle}">Create a New Sub</a>
+                <a class="nav-link" th:href="@{/subs/create}" th:text="#{label.sub.pageTitle}">New Sub</a>
+            </li>
+            <li class="nav-item" sec:authorize="isAuthenticated()">
+                <a class="nav-link" th:href="@{/posts/create}" th:text="#{label.pages.post.message}">New Post</a>
             </li>
             <li class="nav-item" sec:authorize="isAnonymous()">
                 <a class="nav-link">PLACEHOLDER</a>

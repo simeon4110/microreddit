@@ -1,7 +1,5 @@
 package com.microreddit.app.persistence.models;
 
-import org.jsoup.Jsoup;
-import org.jsoup.safety.Whitelist;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
@@ -15,44 +13,24 @@ import org.springframework.data.cassandra.core.mapping.Table;
 public class Post {
     @PrimaryKey
     private final PostKey key;
-
     @Column("post_title")
-    private final String title;
-    @Column("post_sub")
-    private final String subName;
-    @Column("post_user")
-    private final String userName;
+    private String title;
     @Column("post_text")
     private String text;
+    @Column("type")
+    private String type;
     @Column("post_karma")
     private int karma;
 
-    /**
-     * @param key      a unique PostKey.class object.
-     * @param title    the post's title.
-     * @param text     the post's body (text or URL).
-     * @param subName  the name of the sub the post is subbed to.
-     * @param userName the name of the user subbing the sub.
-     */
-    public Post(final PostKey key, final String title, final String text, final String subName, final String userName) {
+    public Post(final PostKey key) {
         this.key = key;
-        this.title = Jsoup.clean(title, Whitelist.simpleText());
-        this.text = Jsoup.clean(text, Whitelist.simpleText());
-        this.subName = subName;
-        this.userName = userName;
         this.karma = 0;
     }
 
-    /**
-     * Add a karma point.
-     */
     public void upVote() {
         this.karma += 1;
     }
 
-    /**
-     * Remove a karma point.
-     */
     public void downVote() {
         this.karma -= 1;
     }
@@ -65,6 +43,10 @@ public class Post {
         return title;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getText() {
         return text;
     }
@@ -73,25 +55,21 @@ public class Post {
         this.text = text;
     }
 
-    public String getSubName() {
-        return subName;
+    public String getType() {
+        return type;
     }
 
-    public String getUserName() {
-        return userName;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    /**
-     * @return a JSON formatted string of all the post data.
-     */
     @Override
     public String toString() {
         return "Post{" +
                 "key=" + key +
                 ", title='" + title + '\'' +
                 ", text='" + text + '\'' +
-                ", subName='" + subName + '\'' +
-                ", userName='" + userName + '\'' +
+                ", type='" + type + '\'' +
                 ", karma=" + karma +
                 '}';
     }

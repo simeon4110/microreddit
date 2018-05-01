@@ -17,12 +17,12 @@ import java.util.UUID;
  * @author Josh Harkema
  */
 @Service
-public class SubDetailsServiceImpl {
+public class SubDetailsService {
     private UserRepository userRepository;
     private SubRepository subRepository;
 
     @Autowired
-    public SubDetailsServiceImpl(UserRepository userRepository, SubRepository subRepository) {
+    public SubDetailsService(UserRepository userRepository, SubRepository subRepository) {
         this.userRepository = userRepository;
         this.subRepository = subRepository;
     }
@@ -37,20 +37,20 @@ public class SubDetailsServiceImpl {
 
     public Sub createNewSub(String name, String description, UUID creatorID) {
         System.out.println("creating new sub...");
+
         if (subRepository.findByKey_SubName(name) != null) {
             throw new SubAlreadyExistsException(name + " already exists.");
-        } else {
-            SubKey subKey = new SubKey(name);
-            Sub sub = new Sub(subKey, description, creatorID);
-            subRepository.insert(sub);
-
-            User user = userRepository.findByKey_Id(creatorID);
-            user.addSub(sub.getKey().getId());
-            userRepository.save(user);
-
-            return sub;
         }
 
+        SubKey subKey = new SubKey(name);
+        Sub sub = new Sub(subKey, description, creatorID);
+        subRepository.insert(sub);
+
+        User user = userRepository.findByKey_Id(creatorID);
+        user.addSub(sub.getKey().getId());
+        userRepository.save(user);
+
+        return sub;
     }
 
     public void save(Sub sub) {
