@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.UUID;
  *
  * @author Josh Harkema
  */
-public class AppUserPrincipal implements UserDetails {
+public class AppUserPrincipal implements UserDetails, Serializable {
     private User user;
     @Autowired
     private RoleRepository roleRepository;
@@ -50,6 +51,14 @@ public class AppUserPrincipal implements UserDetails {
     @Override
     public String getUsername() {
         return user.getKey().getUserName();
+    }
+
+    public int getPostKarma() {
+        return user.getPostKarma();
+    }
+
+    public int getCommentKarma() {
+        return user.getCommentKarma();
     }
 
     public UUID getID() {

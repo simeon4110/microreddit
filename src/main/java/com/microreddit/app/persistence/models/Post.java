@@ -21,6 +21,10 @@ public class Post {
     private String type;
     @Column("post_karma")
     private int karma;
+    @Column("sub_title")
+    private String subTitle;
+    @Column("post_username")
+    private String username;
 
     public Post(final PostKey key) {
         this.key = key;
@@ -63,14 +67,37 @@ public class Post {
         this.type = type;
     }
 
+    public int getKarma() {
+        return karma;
+    }
+
+    public void setKarma(int karma) {
+        this.karma = karma;
+    }
+
+    public String getSubTitle() {
+        return subTitle;
+    }
+
+    public void setSubTitle(String subTitle) {
+        this.subTitle = subTitle;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     @Override
     public String toString() {
-        return "Post{" +
-                "key=" + key +
-                ", title='" + title + '\'' +
+        return "{title='" + title + '\'' +
                 ", text='" + text + '\'' +
-                ", type='" + type + '\'' +
                 ", karma=" + karma +
+                ", subTitle='" + subTitle + '\'' +
+                ", username='" + username + '\'' +
                 '}';
     }
 }

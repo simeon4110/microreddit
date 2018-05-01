@@ -50,6 +50,10 @@ public class PostDetailsService {
         return postRepository.findByKey_SubID(subID);
     }
 
+    public List<Post> getAllPosts() {
+        return postRepository.findAll();
+    }
+
     public void save(Post post) {
         postRepository.save(post);
     }

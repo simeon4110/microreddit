@@ -42,8 +42,15 @@
         </ul>
         <ul class="nav navbar-nav navbar-right mr-3">
             <li class="nav-item" sec:authorize="isAuthenticated()">
+                <span class="navbar-text mr-3"
+                      th:text="${#authentication.getName()} + ' (' +
+                      ${#authentication.getPrincipal().getPostKarma()} + ', ' +
+                      ${#authentication.getPrincipal().getCommentKarma()} + ')'">
+                </span>
+            </li>
+            <li class="nav-item" sec:authorize="isAuthenticated()">
                 <form th:action="@{/logout}" method="post">
-                    <button type="submit" class="btn btn-primary" th:text="#{label.pages.logout}">Logout</button>
+                    <button type="submit" class="btn btn-primary btn-sm" th:text="#{label.pages.logout}">Logout</button>
                 </form>
             </li>
             <li class="nav-item" sec:authorize="isAnonymous()">

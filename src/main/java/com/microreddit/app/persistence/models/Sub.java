@@ -52,7 +52,9 @@ public class Sub {
     public Sub(final SubKey key, final String description, final UUID creatorID) {
         this.key = key;
         this.description = description;
+        this.title = key.getSubName();
         this.creatorID = creatorID;
+        this.moderators = new ArrayList<>();
         this.moderators.add(creatorID);
     }
 

@@ -5,7 +5,6 @@ import com.microreddit.app.persistence.models.Post;
 import com.microreddit.app.services.PostDetailsService;
 import com.microreddit.app.services.SubDetailsService;
 import com.microreddit.app.services.UserDetailsServiceImpl;
-import com.microreddit.app.services.exceptions.SubAlreadyExistsException;
 import com.microreddit.app.services.exceptions.SubDoesNotExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -51,7 +50,7 @@ public class PostController {
         postDto.setUserID(userDetailsService.loadUserIdByUsername(request.getRemoteUser()));
         System.out.println("Adding post... " + postDto.toString());
 
-        Post newPost = createNewPost(postDto);
+        Post newPost = createNewPost(postDto, request.getRemoteUser());
 
         if (newPost == null) {
             throw new SubDoesNotExistException("Sub ID: " + postDto.getSubName() + " does not exist.");
@@ -61,16 +60,18 @@ public class PostController {
 
     }
 
-    private Post createNewPost(PostDto postDto) {
+    private Post createNewPost(PostDto postDto, String username) {
         try {
             Post newPost = postDetailsService.createNewPost(postDto.getUserID(),
                     subDetailsService.getSubByName(postDto.getSubName()).getKey().getId());
             newPost.setTitle(postDto.getTitle());
             newPost.setText(postDto.getText());
             newPost.setType(postDto.getType());
+            newPost.setUsername(username);
+            newPost.setSubTitle(postDto.getSubName());
             postDetailsService.save(newPost);
             return newPost;
-        } catch (SubAlreadyExistsException e) {
+        } catch (SubDoesNotExistException e) {
             return null;
         }
 

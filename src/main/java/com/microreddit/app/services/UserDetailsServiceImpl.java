@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -61,6 +62,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             return user.getKey().getId();
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public List<UUID> getUserSubs(String username) throws UsernameNotFoundException {
+        try {
+            User user = userRepository.findByKey_UserName(username);
+            List<UUID> subs = user.getSubs();
+            return subs;
+        } catch (UsernameNotFoundException e) {
+            System.out.println("Username: " + username + " not found.");
+            return null;
         }
     }
 

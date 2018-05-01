@@ -1,12 +1,8 @@
 package com.microreddit.app;
 
-import com.microreddit.app.persistence.models.Privilege;
-import com.microreddit.app.persistence.models.Role;
-import com.microreddit.app.persistence.models.User;
-import com.microreddit.app.persistence.models.UserKey;
-import com.microreddit.app.persistence.repositories.PrivilegeRepository;
-import com.microreddit.app.persistence.repositories.RoleRepository;
-import com.microreddit.app.persistence.repositories.UserRepository;
+import com.microreddit.app.persistence.models.*;
+import com.microreddit.app.persistence.repositories.*;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -28,19 +24,29 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     private RoleRepository roleRepository;
     private PrivilegeRepository privilegeRepository;
     private PasswordEncoder passwordEncoder;
+    private SubRepository subRepository;
+    private PostRepository postRepository;
 
     @Autowired
     public InitialDataLoader(UserRepository userRepository, RoleRepository roleRepository,
-                             PrivilegeRepository privilegeRepository, PasswordEncoder passwordEncoder) {
+                             PrivilegeRepository privilegeRepository, PasswordEncoder passwordEncoder,
+                             SubRepository subRepository, PostRepository postRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.privilegeRepository = privilegeRepository;
         this.passwordEncoder = passwordEncoder;
+        this.subRepository = subRepository;
+        this.postRepository = postRepository;
     }
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         if (alreadySetup) return;
+        userRepository.deleteAll();
+        roleRepository.deleteAll();
+        privilegeRepository.deleteAll();
+        subRepository.deleteAll();
+        postRepository.deleteAll();
 
         // Create privileges.
         Privilege readPrivilege = createPrivilegeIfNotFound("READ_PRIVILEGE");
@@ -62,7 +68,52 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         user.setEnabled(true);
         userRepository.insert(user);
 
+        // Create initial testing subs.
+        SubKey subKey1 = new SubKey("test1");
+        Sub sub1 = new Sub(subKey1, "test", user.getKey().getId());
+        subRepository.insert(sub1);
+        SubKey subKey2 = new SubKey("test2");
+        Sub sub2 = new Sub(subKey2, "test", user.getKey().getId());
+        subRepository.insert(sub2);
+        SubKey subKey3 = new SubKey("test3");
+        Sub sub3 = new Sub(subKey3, "test", user.getKey().getId());
+        subRepository.insert(sub3);
+        SubKey subKey4 = new SubKey("test4");
+        Sub sub4 = new Sub(subKey4, "test", user.getKey().getId());
+        subRepository.insert(sub4);
+        SubKey subKey5 = new SubKey("test5");
+        Sub sub5 = new Sub(subKey5, "test", user.getKey().getId());
+        subRepository.insert(sub5);
+
+        // Create initial testing posts.
+        generateRandomPosts(user);
+
         alreadySetup = true;
+    }
+
+    private void generateRandomPosts(User user) {
+        int max = 250;
+        int subCycler = 1;
+        Random random = new Random();
+        for (int count = 0; count < max; count++) {
+            Sub sub = subRepository.findByKey_SubName("test" + subCycler);
+            PostKey postKey = new PostKey(user.getKey().getId(), sub.getKey().getId());
+            Post post = new Post(postKey);
+            post.setSubTitle(sub.getTitle());
+            post.setText(RandomStringUtils.randomAscii(256));
+            post.setKarma(random.nextInt(1000));
+            post.setType("text");
+            post.setUsername(user.getKey().getUserName());
+            post.setTitle("post" + count);
+            postRepository.insert(post);
+            user.setPostKarma(user.getPostKarma() + post.getKarma());
+            userRepository.save(user);
+            if (subCycler == 5) {
+                subCycler = 1;
+            } else {
+                subCycler++;
+            }
+        }
     }
 
     private Privilege createPrivilegeIfNotFound(String name) {
