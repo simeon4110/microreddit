@@ -1,7 +1,7 @@
 package com.microreddit.app.controllers;
 
 import com.microreddit.app.persistence.dto.PostDto;
-import com.microreddit.app.persistence.models.Post;
+import com.microreddit.app.persistence.models.Posts.Post;
 import com.microreddit.app.services.PostDetailsService;
 import com.microreddit.app.services.SubDetailsService;
 import com.microreddit.app.services.UserDetailsServiceImpl;
@@ -68,7 +68,7 @@ public class PostController {
             newPost.setText(postDto.getText());
             newPost.setType(postDto.getType());
             newPost.setUsername(username);
-            newPost.setSubTitle(postDto.getSubName());
+            newPost.setSubName(postDto.getSubName());
             postDetailsService.save(newPost);
             return newPost;
         } catch (SubDoesNotExistException e) {

@@ -1,7 +1,12 @@
 package com.microreddit.app;
 
+import com.microreddit.app.persistence.models.Posts.Post;
 import com.microreddit.app.persistence.models.*;
-import com.microreddit.app.persistence.repositories.*;
+import com.microreddit.app.persistence.repositories.Posts.PostRepositoryImpl;
+import com.microreddit.app.persistence.repositories.PrivilegeRepository;
+import com.microreddit.app.persistence.repositories.RoleRepository;
+import com.microreddit.app.persistence.repositories.SubRepository;
+import com.microreddit.app.persistence.repositories.UserRepository;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -19,18 +24,18 @@ import java.util.*;
  */
 @Component
 public class InitialDataLoader implements ApplicationListener<ContextRefreshedEvent> {
-    private boolean alreadySetup = true; // change this to false to add test data.
+    private boolean alreadySetup = false; // change this to false to add test data.
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private PrivilegeRepository privilegeRepository;
     private PasswordEncoder passwordEncoder;
     private SubRepository subRepository;
-    private PostRepository postRepository;
+    private PostRepositoryImpl postRepository;
 
     @Autowired
     public InitialDataLoader(UserRepository userRepository, RoleRepository roleRepository,
                              PrivilegeRepository privilegeRepository, PasswordEncoder passwordEncoder,
-                             SubRepository subRepository, PostRepository postRepository) {
+                             SubRepository subRepository, PostRepositoryImpl postRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.privilegeRepository = privilegeRepository;
@@ -92,22 +97,26 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     }
 
     private void generateRandomPosts(User user) {
-        int max = 250;
+        int max = 5000;
         int subCycler = 1;
         Random random = new Random();
         for (int count = 0; count < max; count++) {
             Sub sub = subRepository.findByKey_SubName("test" + subCycler);
-            PostKey postKey = new PostKey(user.getKey().getId(), sub.getKey().getId());
-            Post post = new Post(postKey);
-            post.setSubTitle(sub.getTitle());
-            post.setText(RandomStringUtils.randomAscii(256));
+
+            Post post = new Post();
+            post.setSubName(sub.getTitle());
+            post.setSubID(sub.getKey().getId());
+            post.setText(RandomStringUtils.randomAscii(128));
             post.setKarma(random.nextInt(1000));
+            post.setScore(100);
             post.setType("text");
             post.setUsername(user.getKey().getUserName());
             post.setTitle("post" + count);
             postRepository.insert(post);
+
             user.setPostKarma(user.getPostKarma() + post.getKarma());
             userRepository.save(user);
+
             if (subCycler == 5) {
                 subCycler = 1;
             } else {

@@ -17,11 +17,15 @@ import org.springframework.context.annotation.Configuration;
  * @author Josh Harkema
  */
 @Configuration
+//@PropertySource("classpath:environment.properties")
 @EnableRabbit
 public class RabbitConfig {
-    private static final String TOPIC = "microreddit-exchange";
-    private static final String QUEUE = "microreddit";
-    private static final String HOST = "192.168.0.11";
+    //    @Value("${rabbit.topic}")
+    private static String TOPIC = "microreddit-exchange";
+    //    @Value("${rabbit.queue}")
+    private static String QUEUE = "microreddit";
+    //    @Value("${rabit.host}")
+    private static String HOST = "192.168.0.11";
 
     @Bean
     public Queue queue() {

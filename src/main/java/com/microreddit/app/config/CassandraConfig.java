@@ -1,5 +1,9 @@
 package com.microreddit.app.config;
 
+import com.microreddit.app.persistence.models.Posts.Post;
+import com.microreddit.app.persistence.repositories.Posts.PostBySubRepository;
+import com.microreddit.app.persistence.repositories.Posts.PostRepository;
+import com.microreddit.app.persistence.repositories.Posts.PostRepositoryImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.cassandra.config.CassandraClusterFactoryBean;
@@ -12,8 +16,12 @@ import org.springframework.data.cassandra.core.convert.CassandraConverter;
 import org.springframework.data.cassandra.core.convert.MappingCassandraConverter;
 import org.springframework.data.cassandra.core.mapping.BasicCassandraMappingContext;
 import org.springframework.data.cassandra.core.mapping.CassandraMappingContext;
+import org.springframework.data.cassandra.core.mapping.CassandraPersistentEntity;
 import org.springframework.data.cassandra.core.mapping.SimpleUserTypeResolver;
 import org.springframework.data.cassandra.repository.config.EnableCassandraRepositories;
+import org.springframework.data.cassandra.repository.support.MappingCassandraEntityInformation;
+
+import java.util.UUID;
 
 /**
  * Custom Cassandra cluster config.
@@ -21,10 +29,13 @@ import org.springframework.data.cassandra.repository.config.EnableCassandraRepos
  * @author Josh Harkema
  */
 @Configuration
+//@PropertySource("classpath:environment.properties")
 @EnableCassandraRepositories(basePackages = {"com.microreddit.app.persistence.repositories"})
 public class CassandraConfig {
-    private static final String KEYSPACE = "db";
-    private static final String CONTACTPOINTS = "192.168.0.11";
+    //    @Value("${cassandra.keyspace}")
+    private static String KEYSPACE = "db";
+    //    @Value("${cassandra.contactpoints}")
+    private static String CONTACTPOINTS = "192.168.0.11";
 
     private String getKeyspaceName() {
         return KEYSPACE;
@@ -64,6 +75,18 @@ public class CassandraConfig {
     @Bean
     public CassandraOperations cassandraTemplate() throws Exception {
         return new CassandraTemplate(session().getObject());
+    }
+
+    @Bean
+    public PostRepository postRepository(final CassandraTemplate template,
+                                         final PostBySubRepository postBySubRepository) throws Exception {
+        final CassandraPersistentEntity<?> entity = template.getConverter().getMappingContext()
+                .getRequiredPersistentEntity(Post.class);
+        final MappingCassandraEntityInformation metadata = new MappingCassandraEntityInformation<Post, UUID>(
+                (CassandraPersistentEntity<Post>) entity, template.getConverter()
+        );
+
+        return new PostRepositoryImpl(metadata, template, postBySubRepository);
     }
 
 }

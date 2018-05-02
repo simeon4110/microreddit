@@ -19,4 +19,5 @@ public class ExtraConfig {
         javaMailSender.setPort(25);
         return javaMailSender;
     }
+
 }
