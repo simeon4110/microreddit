@@ -8,8 +8,8 @@ periodically updated with working builds. Feel free to use it, but the data gets
 
 # Help Wanted
 We need java devs of all skill levels (from undergrad to retired engineer) to join the project. Spring Boot, REST,
-thymeleaf, Python (for connectors,) cassandra, redis, UX, UI, security, etc., are all skills we can use. If you're
-looking for somewhere to take a crack at working on a big project, this is your chance.
+thymeleaf, Python (for connectors,) cassandra, redis, UX, UI, security, JavaScript, etc., are all skills we can use. If 
+you're looking for somewhere to take a crack at working on a big project, this is your chance.
 
 Only collaborators (eh, comrades?) can contribute, but anyone who asks will be added. No proof of experience needed, 
 and no shame in screwing something up--we all had to learn somewhere and a repo can always be rolled back.
@@ -50,3 +50,10 @@ devs. Python can be used for 'glue' or other misc needs.
 - We will build it and then we will figure out the finer rules of the platform. Josh has some ideas on how this is going 
 to work, but we must build something before we can devolve into arguing about how 'x' type of conflict will be resolved 
 or how 'x' type of sub will be moderated.
+
+### Note:
+
+Right now the UI is bootstrap based, this is because I (Josh) am not a web designer and I am only comfortable with 
+bootstrap (I always use it for WebMVC protos). I _strongly_ encourage someone to completely replace the front end
+design. If you want this project, take it, I can't write CSS. It will probably be easiest if you just use the same CSS
+tags as bootstrap does so you don't also have to rewrite all the Thymeleaf templates, but it's really your call. 
