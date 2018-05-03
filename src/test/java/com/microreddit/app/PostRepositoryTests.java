@@ -1,7 +1,9 @@
 package com.microreddit.app;
 
 import com.microreddit.app.persistence.models.Posts.Sub.PostBySub;
+import com.microreddit.app.persistence.models.Posts.Sub.PostBySubKarma;
 import com.microreddit.app.persistence.repositories.Posts.PostRepositoryImpl;
+import com.microreddit.app.persistence.repositories.Posts.Sub.PostBySubKarmaRepository;
 import com.microreddit.app.persistence.repositories.Posts.Sub.PostBySubRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +24,8 @@ public class PostRepositoryTests {
     PostRepositoryImpl postRepository;
     @Autowired
     PostBySubRepository postBySubRepository;
+    @Autowired
+    PostBySubKarmaRepository postBySubKarmaRepository;
 
 //    @Test
 //    public void readPostsByPageCorrectly() {
@@ -35,11 +39,18 @@ public class PostRepositoryTests {
 
     @Test
     public void sortBySubAndScore() {
-        List<PostBySub> bySub = postBySubRepository.findByKey_SubID(UUID.fromString("718cdd6f-4c3c-4d0b-af1e-572078ce3e8b"));
+        List<PostBySub> bySub = postBySubRepository.findByKey_SubID(UUID.fromString("4c68fff4-1105-48c9-93e1-1ef1a3795960"));
         for (PostBySub p : bySub) {
             System.out.println(p);
         }
 
+        List<PostBySubKarma> byKarma = postBySubKarmaRepository.findByKey_SubID(
+                UUID.fromString("8b13f0c1-50d1-4c2c-9bc7-b4ef436b4ed2")
+        );
+
+        for (PostBySubKarma p : byKarma) {
+            System.out.println(p);
+        }
     }
 
 }

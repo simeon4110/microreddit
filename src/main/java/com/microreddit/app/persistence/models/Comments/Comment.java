@@ -1,4 +1,4 @@
-package com.microreddit.app.persistence.models;
+package com.microreddit.app.persistence.models.Comments;
 
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;

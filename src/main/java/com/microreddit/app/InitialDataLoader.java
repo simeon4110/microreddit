@@ -23,7 +23,7 @@ import java.util.*;
  */
 @Component
 public class InitialDataLoader implements ApplicationListener<ContextRefreshedEvent> {
-    private boolean alreadySetup = false; // change this to false to add test data.
+    private boolean alreadySetup = true; // change this to false to add test data.
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private PrivilegeRepository privilegeRepository;
@@ -102,7 +102,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     }
 
     private void generateRandomPosts(User user) {
-        int max = 50;
+        int max = 5000;
         int cycler = 0;
         Random r = new Random();
 

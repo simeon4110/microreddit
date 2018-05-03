@@ -3,7 +3,6 @@ package com.microreddit.app.persistence.repositories.Posts;
 import com.microreddit.app.persistence.models.Posts.Post;
 import com.microreddit.app.persistence.models.Posts.Sub.*;
 import com.microreddit.app.persistence.repositories.Posts.Sub.*;
-import org.springframework.data.cassandra.core.CassandraBatchOperations;
 import org.springframework.data.cassandra.core.CassandraTemplate;
 import org.springframework.data.cassandra.repository.query.CassandraEntityInformation;
 import org.springframework.data.cassandra.repository.support.SimpleCassandraRepository;
@@ -39,29 +38,24 @@ public class PostRepositoryImpl extends SimpleCassandraRepository<Post, UUID> im
 
     @Override
     public <S extends Post> S insert(final S post) {
-        final CassandraBatchOperations batchOperations = cassandraTemplate.batchOps();
-
-        insertBySub(post, batchOperations);
-        insertBySubComments(post, batchOperations);
-        insertBySubKarma(post, batchOperations);
-        insertBySubNew(post, batchOperations);
-        insertBySubScore(post, batchOperations);
-        batchOperations.insert(post);
-        batchOperations.execute();
+        insertBySub(post);
+        insertBySubComments(post);
+        insertBySubKarma(post);
+        insertBySubNew(post);
+        insertBySubScore(post);
+        super.insert(post);
         return post;
 
     }
 
     @Override
     public void delete(final Post post) {
-        final CassandraBatchOperations batchOperations = cassandraTemplate.batchOps();
-        deleteBySub(post, batchOperations);
-        deleteBySubComments(post, batchOperations);
-        deleteBySubKarma(post, batchOperations);
-        deleteBySubNew(post, batchOperations);
-        deleteBySubScore(post, batchOperations);
-        batchOperations.delete(post);
-        batchOperations.execute();
+        deleteBySub(post);
+        deleteBySubComments(post);
+        deleteBySubKarma(post);
+        deleteBySubNew(post);
+        deleteBySubScore(post);
+        super.delete(post);
     }
 
     @Override
@@ -79,67 +73,67 @@ public class PostRepositoryImpl extends SimpleCassandraRepository<Post, UUID> im
         return insert(posts);
     }
 
-    private void insertBySub(Post post, CassandraBatchOperations batchOperations) {
+    private void insertBySub(Post post) {
         PostBySubKey key = new PostBySubKey(post.getSubID(), post.getPostID());
-        batchOperations.insert(new PostBySub(
+        postBySubRepository.insert(new PostBySub(
                 key, post.getUsername(), post.getSubName(), post.getScore(), post.getKarma(), post.getTitle(),
                 post.getText(), post.getText(), post.getNumComments()
         ));
     }
 
-    private void insertBySubComments(Post post, CassandraBatchOperations batchOperations) {
+    private void insertBySubComments(Post post) {
         PostBySubCommentsKey key = new PostBySubCommentsKey(post.getSubID(), post.getPostID());
         key.setNumComments(post.getNumComments());
-        batchOperations.insert(new PostBySubComments(
+        postBySubCommentsRepository.insert(new PostBySubComments(
                 key, post.getUsername(), post.getSubName(), post.getScore(), post.getKarma(), post.getTitle(),
                 post.getText(), post.getType()
         ));
     }
 
-    private void insertBySubKarma(Post post, CassandraBatchOperations batchOperations) {
+    private void insertBySubKarma(Post post) {
         PostBySubKarmaKey key = new PostBySubKarmaKey(post.getSubID(), post.getPostID());
         key.setKarma(post.getKarma());
-        batchOperations.insert(new PostBySubKarma(
+        postBySubKarmaRepository.insert(new PostBySubKarma(
                 key, post.getUsername(), post.getSubName(), post.getScore(), post.getTitle(), post.getText(),
                 post.getType(), post.getNumComments()
         ));
     }
 
-    private void insertBySubNew(Post post, CassandraBatchOperations batchOperations) {
+    private void insertBySubNew(Post post) {
         PostBySubNewKey key = new PostBySubNewKey(post.getSubID(), post.getPostID());
-        batchOperations.insert(new PostBySubNew(
+        postBySubNewRepository.insert(new PostBySubNew(
                 key, post.getUsername(), post.getSubName(), post.getScore(), post.getKarma(), post.getTitle(),
                 post.getText(), post.getType(), post.getNumComments()
         ));
     }
 
-    private void insertBySubScore(Post post, CassandraBatchOperations batchOperations) {
+    private void insertBySubScore(Post post) {
         PostBySubScoreKey key = new PostBySubScoreKey(post.getSubID(), post.getPostID());
         key.setScore(post.getScore());
-        batchOperations.insert(new PostBySubScore(
+        postBySubScoreRepository.insert(new PostBySubScore(
                 key, post.getUsername(), post.getSubName(), post.getKarma(), post.getTitle(), post.getText(),
                 post.getType(), post.getNumComments()
         ));
     }
 
-    private void deleteBySub(final Post post, final CassandraBatchOperations batchOperations) {
-        batchOperations.delete(postBySubRepository.findByKey_PostID(post.getPostID()));
+    private void deleteBySub(final Post post) {
+        postBySubRepository.delete(postBySubRepository.findByKey_PostID(post.getPostID()));
     }
 
-    private void deleteBySubComments(final Post post, final CassandraBatchOperations batchOperations) {
-        batchOperations.delete(postBySubCommentsRepository.findByKey_PostID(post.getPostID()));
+    private void deleteBySubComments(final Post post) {
+        postBySubCommentsRepository.delete(postBySubCommentsRepository.findByKey_PostID(post.getPostID()));
     }
 
-    private void deleteBySubKarma(final Post post, final CassandraBatchOperations batchOperations) {
-        batchOperations.delete(postBySubKarmaRepository.findByKey_PostID(post.getPostID()));
+    private void deleteBySubKarma(final Post post) {
+        postBySubKarmaRepository.delete(postBySubKarmaRepository.findByKey_PostID(post.getPostID()));
     }
 
-    private void deleteBySubNew(final Post post, final CassandraBatchOperations batchOperations) {
-        batchOperations.delete(postBySubNewRepository.findByKey_PostID(post.getPostID()));
+    private void deleteBySubNew(final Post post) {
+        postBySubNewRepository.delete(postBySubNewRepository.findByKey_PostID(post.getPostID()));
     }
 
-    private void deleteBySubScore(final Post post, final CassandraBatchOperations batchOperations) {
-        batchOperations.delete(postBySubScoreRepository.findByKey_PostID(post.getPostID()));
+    private void deleteBySubScore(final Post post) {
+        postBySubScoreRepository.delete(postBySubScoreRepository.findByKey_PostID(post.getPostID()));
     }
 
 }
