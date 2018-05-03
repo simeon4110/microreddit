@@ -17,10 +17,10 @@ import java.util.UUID;
 public class PostBySubKarmaKey implements Serializable {
     @PrimaryKeyColumn(name = "sub_id", type = PrimaryKeyType.PARTITIONED)
     private final UUID subID;
-    @PrimaryKeyColumn(name = "post_id", ordinal = 1, ordering = Ordering.DESCENDING)
-    private final UUID postID;
     @PrimaryKeyColumn(name = "karma", ordinal = 0, ordering = Ordering.DESCENDING)
     private int karma;
+    @PrimaryKeyColumn(name = "post_id", ordinal = 1, ordering = Ordering.DESCENDING)
+    private final UUID postID;
 
     public PostBySubKarmaKey(UUID subID, UUID postID) {
         this.subID = subID;
