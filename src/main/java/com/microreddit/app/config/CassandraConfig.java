@@ -1,9 +1,9 @@
 package com.microreddit.app.config;
 
 import com.microreddit.app.persistence.models.Posts.Post;
-import com.microreddit.app.persistence.repositories.Posts.PostBySubRepository;
 import com.microreddit.app.persistence.repositories.Posts.PostRepository;
 import com.microreddit.app.persistence.repositories.Posts.PostRepositoryImpl;
+import com.microreddit.app.persistence.repositories.Posts.Sub.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.cassandra.config.CassandraClusterFactoryBean;
@@ -77,16 +77,22 @@ public class CassandraConfig {
         return new CassandraTemplate(session().getObject());
     }
 
+    // This is where PostRepositoryImpl gets its config.
     @Bean
     public PostRepository postRepository(final CassandraTemplate template,
-                                         final PostBySubRepository postBySubRepository) throws Exception {
+                                         final PostBySubRepository postBySubRepository,
+                                         final PostBySubCommentsRepository postBySubCommentsRepository,
+                                         final PostBySubKarmaRepository postBySubKarmaRepository,
+                                         final PostBySubNewRepository postBySubNewRepository,
+                                         final PostBySubScoreRepository postByScoreRepository) throws Exception {
         final CassandraPersistentEntity<?> entity = template.getConverter().getMappingContext()
                 .getRequiredPersistentEntity(Post.class);
         final MappingCassandraEntityInformation metadata = new MappingCassandraEntityInformation<Post, UUID>(
                 (CassandraPersistentEntity<Post>) entity, template.getConverter()
         );
 
-        return new PostRepositoryImpl(metadata, template, postBySubRepository);
+        return new PostRepositoryImpl(metadata, template, postBySubRepository, postBySubCommentsRepository,
+                postBySubKarmaRepository, postBySubNewRepository, postByScoreRepository);
     }
 
 }

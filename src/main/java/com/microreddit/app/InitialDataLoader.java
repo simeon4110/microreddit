@@ -7,7 +7,6 @@ import com.microreddit.app.persistence.repositories.PrivilegeRepository;
 import com.microreddit.app.persistence.repositories.RoleRepository;
 import com.microreddit.app.persistence.repositories.SubRepository;
 import com.microreddit.app.persistence.repositories.UserRepository;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -31,6 +30,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     private PasswordEncoder passwordEncoder;
     private SubRepository subRepository;
     private PostRepositoryImpl postRepository;
+    private List<Sub> subs;
 
     @Autowired
     public InitialDataLoader(UserRepository userRepository, RoleRepository roleRepository,
@@ -42,6 +42,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         this.passwordEncoder = passwordEncoder;
         this.subRepository = subRepository;
         this.postRepository = postRepository;
+        this.subs = new ArrayList<>();
     }
 
     @Override
@@ -76,53 +77,57 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         // Create initial testing subs.
         SubKey subKey1 = new SubKey("test1");
         Sub sub1 = new Sub(subKey1, "test", user.getKey().getId());
+        subs.add(sub1);
         subRepository.insert(sub1);
         SubKey subKey2 = new SubKey("test2");
         Sub sub2 = new Sub(subKey2, "test", user.getKey().getId());
+        subs.add(sub2);
         subRepository.insert(sub2);
         SubKey subKey3 = new SubKey("test3");
         Sub sub3 = new Sub(subKey3, "test", user.getKey().getId());
+        subs.add(sub3);
         subRepository.insert(sub3);
         SubKey subKey4 = new SubKey("test4");
         Sub sub4 = new Sub(subKey4, "test", user.getKey().getId());
+        subs.add(sub4);
         subRepository.insert(sub4);
         SubKey subKey5 = new SubKey("test5");
         Sub sub5 = new Sub(subKey5, "test", user.getKey().getId());
+        subs.add(sub5);
         subRepository.insert(sub5);
 
-        // Create initial testing posts.
         generateRandomPosts(user);
 
         alreadySetup = true;
     }
 
     private void generateRandomPosts(User user) {
-        int max = 5000;
-        int subCycler = 1;
-        Random random = new Random();
-        for (int count = 0; count < max; count++) {
-            Sub sub = subRepository.findByKey_SubName("test" + subCycler);
+        int max = 50;
+        int cycler = 0;
+        Random r = new Random();
 
+        for (int i = 0; i < max; i++) {
+            Sub sub = subs.get(cycler);
             Post post = new Post();
-            post.setSubName(sub.getTitle());
-            post.setSubID(sub.getKey().getId());
-            post.setText(RandomStringUtils.randomAscii(128));
-            post.setKarma(random.nextInt(1000));
-            post.setScore(100);
-            post.setType("text");
+            post.setUserID(user.getKey().getId());
             post.setUsername(user.getKey().getUserName());
-            post.setTitle("post" + count);
+            post.setSubID(sub.getKey().getId());
+            post.setSubName(sub.getTitle());
+            post.setScore(r.nextInt(250));
+            post.setKarma(r.nextInt(500));
+            post.setTitle("Post " + i);
+            post.setText("Post text...");
+            post.setType("LINK");
+
             postRepository.insert(post);
 
-            user.setPostKarma(user.getPostKarma() + post.getKarma());
-            userRepository.save(user);
-
-            if (subCycler == 5) {
-                subCycler = 1;
+            if (cycler == 4) {
+                cycler = 0;
             } else {
-                subCycler++;
+                cycler++;
             }
         }
+
     }
 
     private Privilege createPrivilegeIfNotFound(String name) {

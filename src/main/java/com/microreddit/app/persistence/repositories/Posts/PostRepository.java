@@ -7,11 +7,11 @@ import org.springframework.data.repository.NoRepositoryBean;
 import java.util.UUID;
 
 /**
- * Repo for all post data. Allows query by compound key.
+ * Empty for a reason.
  *
  * @author Josh Harkema
  */
 @NoRepositoryBean
 public interface PostRepository extends CassandraRepository<Post, UUID> {
-    // Post insert (Post post);
+    //
 }
