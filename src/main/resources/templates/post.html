@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <title th:text="${Post.getTitle()} + ' - ' + ${Post.getSubName()}"></title>
+    <div th:replace="fragments/header :: head"></div>
+</head>
+<body>
+<main name="main">
+    <div th:replace="fragments/header :: nav-bar"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-10">
+                <div class="row mx-1 my-auto">
+                    <div class="col-1-lg my-auto mx-1" style="width: 35px;">
+                        <span class="oi oi-arrow-thick-top" style="width: 100%; text-align: center"></span>
+                        <p class="my-1" style="text-align: center" th:text="${Post.getKarma()}"></p>
+                        <span class="oi oi-arrow-thick-bottom" style="width: 100%; text-align: center"></span>
+                    </div>
+                    <div class="col-2-lg my-auto">
+                        <img th:src="@{../img/uredditThumb.jpg}"/>
+                    </div>
+                    <div class="col-9-lg mx-1">
+                        <p class="h4 my-0" th:text="${Post.getTitle()}">Title</p>
+                        <p class="my-0"
+                           th:text="'Submitted at ' + ${Post.getTimestamp()} + ' by ' +
+                            ${Post.getUsername()} + ' to ' + ${Post.getSubName()}">
+                        </p>
+                        <p class="my-0">comments | share | save | report</p>
+                    </div>
+                    <hr class="my-2 mx-3" style="border-color: antiquewhite;"/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-10">
+                <form th:action="@{/posts/addcomment}" th:object="${CommentDto}" method="POST" class="form mx-3">
+                    <div th:if="${param.error}" class="alert alert-error">
+                        An error occurred.
+                    </div>
+                    <div class="form-group">
+                        <label for="commenttext" class="control-label">Add a comment: </label>
+                        <textarea id="commenttext" class="form-control" name="text"></textarea>
+                    </div>
+                    <!--<input type="hidden" name="userID" th:value="${#authentication.getPrincipal().getKey().getId()}" />-->
+                    <!--<input type="hidden" name="post_id" th:value="${Post.getId()}" />-->
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    <button type="submit" class="btn btn-primary" th:text="#{label.form.submit}">submit</button>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-10">
+                <div th:each="Comment : ${comments}" class="row mx-1 my-auto">
+                    <p>COMMENTS GO HERE!</p>
+                </div>
+            </div>
+        </div>
+
+        <div th:replace="fragments/footer :: footer"></div>
+        <div th:replace="fragments/footer :: scripts"></div>
+</main>
+</body>
+</html>

@@ -7,7 +7,10 @@ import org.springframework.data.cassandra.core.CassandraTemplate;
 import org.springframework.data.cassandra.repository.query.CassandraEntityInformation;
 import org.springframework.data.cassandra.repository.support.SimpleCassandraRepository;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -49,6 +52,12 @@ public class PostRepositoryImpl extends SimpleCassandraRepository<Post, UUID> im
     }
 
     @Override
+    public Post findByPostIDEquals(final UUID id) {
+        Optional<Post> post = super.findById(id);
+        return post.orElse(null);
+    }
+
+    @Override
     public void delete(final Post post) {
         deleteBySub(post);
         deleteBySubComments(post);
@@ -56,6 +65,19 @@ public class PostRepositoryImpl extends SimpleCassandraRepository<Post, UUID> im
         deleteBySubNew(post);
         deleteBySubScore(post);
         super.delete(post);
+    }
+
+    @Override
+    public List<Post> findTodayPosts() {
+        List<Post> posts = new ArrayList<>();
+        for (Post p : findAll()) {
+            if (Timestamp.valueOf(p.getTimestamp()).after(new Timestamp(System.currentTimeMillis() - 60 * 60 * 24 * 1000))) {
+                posts.add(p);
+                System.out.println("BOO");
+            }
+        }
+
+        return posts;
     }
 
     @Override

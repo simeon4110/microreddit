@@ -21,15 +21,17 @@
                         <img th:src="@{img/uredditThumb.jpg}"/>
                     </div>
                     <div class="col-9-lg mx-1">
-                        <p class="h4 my-0" th:text="${Post.getTitle()}">Title</p>
+                        <a th:href="@{/posts/} + ${Post.getPostID()}">
+                            <p class="h4 my-0" th:text="${Post.getTitle()}">Title</p>
+                        </a>
                         <p class="my-0"
                            th:text="'Submitted at ' + ${Post.getTimestamp()} + ' by ' +
                             ${Post.getUsername()} + ' to ' + ${Post.getSubName()}">
                         </p>
                         <p class="my-0">Comment share save report</p>
                     </div>
+                    <hr class="my-2 mx-3" style="border-color: antiquewhite;"/>
                 </div>
-                <hr class="my-2 mx-3" style="border-color: antiquewhite;"/>
             </div>
             <!--end of post template-->
             <div class="col-lg-2">
@@ -39,7 +41,6 @@
     </div>
     <div th:replace="fragments/footer :: footer"></div>
     <div th:replace="fragments/footer :: scripts"></div>
-    </div>
 </main>
 </body>
 </html>

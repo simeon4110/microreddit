@@ -40,6 +40,10 @@ public class PostDetailsService {
         return post;
     }
 
+    public Post getPost(final UUID postID) {
+        return postRepository.findByPostIDEquals(postID);
+    }
+
     @Cacheable(value = "all")
     public List<Post> getAllPosts() {
         return postRepository.findAll();

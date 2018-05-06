@@ -1,5 +1,6 @@
 package com.microreddit.app.persistence.models.Comments;
 
+import com.datastax.driver.core.utils.UUIDs;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
@@ -21,7 +22,7 @@ public class Comment implements Serializable {
     @Column("comment_user_id")
     private UUID userID;
     @Column("comment_user")
-    private String userName;
+    private String username;
     @Column("comment_parent")
     private UUID parentID;
     @Column("comment_text")
@@ -30,7 +31,7 @@ public class Comment implements Serializable {
     private int karma;
 
     public Comment() {
-        this.key = UUID.randomUUID();
+        this.key = UUIDs.timeBased();
         this.karma = 0;
     }
 
@@ -56,12 +57,12 @@ public class Comment implements Serializable {
         this.userID = userID;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public UUID getParentID() {
@@ -98,7 +99,7 @@ public class Comment implements Serializable {
         if (karma != comment.karma) return false;
         if (key != null ? !key.equals(comment.key) : comment.key != null) return false;
         if (userID != null ? !userID.equals(comment.userID) : comment.userID != null) return false;
-        if (userName != null ? !userName.equals(comment.userName) : comment.userName != null) return false;
+        if (username != null ? !username.equals(comment.username) : comment.username != null) return false;
         if (parentID != null ? !parentID.equals(comment.parentID) : comment.parentID != null) return false;
         return text != null ? text.equals(comment.text) : comment.text == null;
     }
@@ -107,7 +108,7 @@ public class Comment implements Serializable {
     public int hashCode() {
         int result = key != null ? key.hashCode() : 0;
         result = 31 * result + (userID != null ? userID.hashCode() : 0);
-        result = 31 * result + (userName != null ? userName.hashCode() : 0);
+        result = 31 * result + (username != null ? username.hashCode() : 0);
         result = 31 * result + (parentID != null ? parentID.hashCode() : 0);
         result = 31 * result + (text != null ? text.hashCode() : 0);
         result = 31 * result + karma;
@@ -119,7 +120,7 @@ public class Comment implements Serializable {
         return "Comment{" +
                 "key=" + key +
                 ", userID=" + userID +
-                ", userName='" + userName + '\'' +
+                ", username='" + username + '\'' +
                 ", parentID=" + parentID +
                 ", text='" + text + '\'' +
                 ", karma=" + karma +

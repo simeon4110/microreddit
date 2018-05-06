@@ -13,11 +13,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.UUID;
 
 /**
  * Serves all post related pages and handles all post related GET, POST, etc requests. :TODO: create post template.
@@ -58,6 +60,14 @@ public class PostController {
 
         return new ModelAndView("index", "PostDto", postDto);
 
+    }
+
+    @GetMapping("/posts/{id}")
+    public ModelAndView viewPost(@PathVariable(value = "id") String id) {
+        UUID postUUID = UUID.fromString(id);
+        Post post = postDetailsService.getPost(postUUID);
+
+        return new ModelAndView("post", "Post", post);
     }
 
     private Post createNewPost(PostDto postDto, String username) {

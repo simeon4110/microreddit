@@ -31,10 +31,4 @@ public class FrontPageController {
         return "index";
     }
 
-    @Cacheable("for-post")
-    @GetMapping("/posts/{id}")
-    public String showPost() {
-        return "";
-    }
-
 }

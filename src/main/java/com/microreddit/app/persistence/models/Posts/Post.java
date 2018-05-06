@@ -1,6 +1,7 @@
 package com.microreddit.app.persistence.models.Posts;
 
 import com.datastax.driver.core.DataType;
+import com.datastax.driver.core.utils.UUIDs;
 import org.springframework.data.cassandra.core.mapping.CassandraType;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
@@ -45,7 +46,7 @@ public class Post implements Serializable {
     private List<UUID> comments;
 
     public Post() {
-        this.postID = UUID.randomUUID();
+        this.postID = UUIDs.timeBased();
         this.timestamp = new Timestamp(System.currentTimeMillis()).toString();
     }
 
