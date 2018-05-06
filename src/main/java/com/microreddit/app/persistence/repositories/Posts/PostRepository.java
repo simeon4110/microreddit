@@ -2,6 +2,7 @@ package com.microreddit.app.persistence.repositories.Posts;
 
 import com.microreddit.app.persistence.models.Posts.Post;
 import org.springframework.data.cassandra.repository.CassandraRepository;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.NoRepositoryBean;
 
 import java.util.List;
@@ -17,5 +18,7 @@ public interface PostRepository extends CassandraRepository<Post, UUID> {
     List<Post> findTodayPosts();
 
     Post findByPostIDEquals(final UUID id);
+
+    List<Post> findAllPaged(Pageable pageable);
 
 }

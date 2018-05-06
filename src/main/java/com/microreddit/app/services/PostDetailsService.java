@@ -4,8 +4,8 @@ import com.microreddit.app.persistence.models.Posts.Post;
 import com.microreddit.app.persistence.repositories.Posts.PostRepository;
 import com.microreddit.app.persistence.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +17,6 @@ import java.util.UUID;
  * @author Josh Harkema
  */
 @Service
-@CacheConfig(cacheNames = "post-cache")
 public class PostDetailsService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
@@ -44,9 +43,9 @@ public class PostDetailsService {
         return postRepository.findByPostIDEquals(postID);
     }
 
-    @Cacheable(value = "all")
-    public List<Post> getAllPosts() {
-        return postRepository.findAll();
+    @Cacheable(value = "page")
+    public List<Post> getPage(Pageable pageable) {
+        return postRepository.findAllPaged(pageable);
     }
 
     public void save(Post post) {

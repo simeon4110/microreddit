@@ -9,7 +9,7 @@
     <div th:replace="fragments/header :: nav-bar"></div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-9">
+            <div class="col-lg-10">
                 <div class="row mx-1 my-auto">
                     <div class="col-1-lg my-auto mx-1" style="width: 35px;">
                         <span class="oi oi-arrow-thick-top" style="width: 100%; text-align: center"></span>
@@ -28,13 +28,7 @@
                         <p class="my-0" th:text="${Post.getNumComments()} + ' comments | share | save | report'"></p>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-3">
-                <p style="text-align: center">SIDEBAR GOES HERE</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-10">
+                <br/>
                 <form th:action="@{/posts/addcomment}" th:object="${CommentDto}" method="POST" class="form col-md-6">
                     <div th:if="${param.error}" class="alert alert-error">
                         An error occurred.
@@ -55,6 +49,9 @@
                     </div>
                 </form>
                 <hr class="my-2 mx-2" style="border-color: black;"/>
+            </div>
+            <div class="col-lg-2 justify-content-center">
+                <div th:replace="fragments/sidebar :: sidebar-main"></div>
             </div>
         </div>
         <div class="row">

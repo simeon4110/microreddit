@@ -9,7 +9,7 @@
     <div th:replace="fragments/header :: nav-bar"></div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-9">
+            <div class="col-lg-10">
                 <!--start of post template-->
                 <div th:each="Post : ${posts}" class="row mx-1 my-auto">
                     <div class="col-1-lg my-auto mx-1" style="width: 35px;">
@@ -34,8 +34,8 @@
                 </div>
             </div>
             <!--end of post template-->
-            <div class="col-lg-3">
-                <p>SIDEBAR GOES HERE</p>
+            <div class="col-lg-2">
+                <div th:replace="fragments/sidebar :: sidebar-main"></div>
             </div>
         </div>
     </div>
