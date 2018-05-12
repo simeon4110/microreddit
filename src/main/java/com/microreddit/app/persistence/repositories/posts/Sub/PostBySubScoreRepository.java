@@ -1,4 +1,4 @@
-package com.microreddit.app.persistence.repositories.Posts.Sub;
+package com.microreddit.app.persistence.repositories.posts.Sub;
 
 import com.microreddit.app.persistence.models.Posts.Sub.PostBySubScore;
 import org.springframework.data.cassandra.repository.CassandraRepository;

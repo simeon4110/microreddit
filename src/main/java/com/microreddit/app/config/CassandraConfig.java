@@ -1,9 +1,14 @@
 package com.microreddit.app.config;
 
+import com.microreddit.app.persistence.models.Comments.Comment;
 import com.microreddit.app.persistence.models.Posts.Post;
-import com.microreddit.app.persistence.repositories.Posts.PostRepository;
-import com.microreddit.app.persistence.repositories.Posts.PostRepositoryImpl;
-import com.microreddit.app.persistence.repositories.Posts.Sub.*;
+import com.microreddit.app.persistence.repositories.comments.CommentByPostRepository;
+import com.microreddit.app.persistence.repositories.comments.CommentByUserRepository;
+import com.microreddit.app.persistence.repositories.comments.CommentRepository;
+import com.microreddit.app.persistence.repositories.comments.CommentRepositoryImpl;
+import com.microreddit.app.persistence.repositories.posts.PostRepository;
+import com.microreddit.app.persistence.repositories.posts.PostRepositoryImpl;
+import com.microreddit.app.persistence.repositories.posts.Sub.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.cassandra.config.CassandraClusterFactoryBean;
@@ -14,7 +19,6 @@ import org.springframework.data.cassandra.core.CassandraOperations;
 import org.springframework.data.cassandra.core.CassandraTemplate;
 import org.springframework.data.cassandra.core.convert.CassandraConverter;
 import org.springframework.data.cassandra.core.convert.MappingCassandraConverter;
-import org.springframework.data.cassandra.core.mapping.BasicCassandraMappingContext;
 import org.springframework.data.cassandra.core.mapping.CassandraMappingContext;
 import org.springframework.data.cassandra.core.mapping.CassandraPersistentEntity;
 import org.springframework.data.cassandra.core.mapping.SimpleUserTypeResolver;
@@ -51,7 +55,7 @@ public class CassandraConfig {
 
     @Bean
     public CassandraMappingContext mappingContext() throws ClassNotFoundException {
-        BasicCassandraMappingContext mappingContext = new BasicCassandraMappingContext();
+        CassandraMappingContext mappingContext = new CassandraMappingContext();
         mappingContext.setInitialEntitySet(CassandraEntityClassScanner.scan("com.microreddit.app.persistence.models"));
         mappingContext.setUserTypeResolver(new SimpleUserTypeResolver(cluster().getObject(), getKeyspaceName()));
         return mappingContext;
@@ -93,6 +97,20 @@ public class CassandraConfig {
 
         return new PostRepositoryImpl(metadata, template, postBySubRepository, postBySubCommentsRepository,
                 postBySubKarmaRepository, postBySubNewRepository, postByScoreRepository);
+    }
+
+    // Comment repository conf.
+    @Bean
+    public CommentRepository commentRepository(final CassandraTemplate template,
+                                               final CommentByPostRepository commentByPostRepository,
+                                               final CommentByUserRepository commentByUserRepository) throws Exception {
+        final CassandraPersistentEntity<?> commentEntity = template.getConverter().getMappingContext()
+                .getRequiredPersistentEntity(Comment.class);
+        final MappingCassandraEntityInformation commentMetadata = new MappingCassandraEntityInformation<Comment, UUID>(
+                (CassandraPersistentEntity<Comment>) commentEntity, template.getConverter()
+        );
+
+        return new CommentRepositoryImpl(commentMetadata, template, commentByPostRepository, commentByUserRepository);
     }
 
 }

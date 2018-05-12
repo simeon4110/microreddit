@@ -2,9 +2,9 @@ package com.microreddit.app;
 
 import com.microreddit.app.persistence.models.Posts.Sub.PostBySub;
 import com.microreddit.app.persistence.models.Posts.Sub.PostBySubKarma;
-import com.microreddit.app.persistence.repositories.Posts.PostRepositoryImpl;
-import com.microreddit.app.persistence.repositories.Posts.Sub.PostBySubKarmaRepository;
-import com.microreddit.app.persistence.repositories.Posts.Sub.PostBySubRepository;
+import com.microreddit.app.persistence.repositories.posts.PostRepositoryImpl;
+import com.microreddit.app.persistence.repositories.posts.Sub.PostBySubKarmaRepository;
+import com.microreddit.app.persistence.repositories.posts.Sub.PostBySubRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

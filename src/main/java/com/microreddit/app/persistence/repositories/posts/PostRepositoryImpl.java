@@ -1,8 +1,8 @@
-package com.microreddit.app.persistence.repositories.Posts;
+package com.microreddit.app.persistence.repositories.posts;
 
 import com.microreddit.app.persistence.models.Posts.Post;
 import com.microreddit.app.persistence.models.Posts.Sub.*;
-import com.microreddit.app.persistence.repositories.Posts.Sub.*;
+import com.microreddit.app.persistence.repositories.posts.Sub.*;
 import org.springframework.data.cassandra.core.CassandraTemplate;
 import org.springframework.data.cassandra.repository.query.CassandraEntityInformation;
 import org.springframework.data.cassandra.repository.support.SimpleCassandraRepository;

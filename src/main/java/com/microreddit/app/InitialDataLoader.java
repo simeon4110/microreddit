@@ -2,11 +2,11 @@ package com.microreddit.app;
 
 import com.microreddit.app.persistence.models.Posts.Post;
 import com.microreddit.app.persistence.models.*;
-import com.microreddit.app.persistence.repositories.Posts.PostRepositoryImpl;
 import com.microreddit.app.persistence.repositories.PrivilegeRepository;
 import com.microreddit.app.persistence.repositories.RoleRepository;
 import com.microreddit.app.persistence.repositories.SubRepository;
 import com.microreddit.app.persistence.repositories.UserRepository;
+import com.microreddit.app.persistence.repositories.posts.PostRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;

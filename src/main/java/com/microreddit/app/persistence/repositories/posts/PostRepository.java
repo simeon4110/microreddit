@@ -1,4 +1,4 @@
-package com.microreddit.app.persistence.repositories.Posts;
+package com.microreddit.app.persistence.repositories.posts;
 
 import com.microreddit.app.persistence.models.Posts.Post;
 import org.springframework.data.cassandra.repository.CassandraRepository;

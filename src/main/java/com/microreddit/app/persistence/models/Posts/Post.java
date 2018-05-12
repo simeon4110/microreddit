@@ -2,6 +2,7 @@ package com.microreddit.app.persistence.models.Posts;
 
 import com.datastax.driver.core.utils.UUIDs;
 import com.microreddit.app.persistence.models.Comments.Comment;
+import com.microreddit.app.persistence.tools.PostTools;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
@@ -18,7 +19,7 @@ import java.util.UUID;
  * @author Josh Harkema
  */
 @Table("posts")
-public class Post implements Serializable {
+public class Post extends PostTools implements Serializable {
     @PrimaryKey
     private final UUID postID;
     @Column
@@ -47,16 +48,6 @@ public class Post implements Serializable {
     public Post() {
         this.postID = UUIDs.timeBased();
         this.timestamp = new Timestamp(System.currentTimeMillis()).toString();
-    }
-
-    public void upVote() {
-        this.karma += 1;
-    }
-
-    public void downVote() {
-        if (this.karma >= -20) {
-            this.karma -= 1;
-        }
     }
 
     public UUID getPostID() {

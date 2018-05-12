@@ -1,8 +1,8 @@
 package com.microreddit.app.services;
 
 import com.microreddit.app.persistence.models.Posts.Post;
-import com.microreddit.app.persistence.repositories.Posts.PostRepository;
 import com.microreddit.app.persistence.repositories.UserRepository;
+import com.microreddit.app.persistence.repositories.posts.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
