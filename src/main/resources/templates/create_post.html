@@ -19,15 +19,15 @@
                 <form th:action="@{/posts/create}" th:object="${PostDto}" method="POST" class="form mx-3">
                     <div class="form-group">
                         <label for="title" class="control-label" th:text="#{label.pages.post.title}">Title</label>
-                        <input postID="title" class="form-control" th:field="*{title}" autofocus required/>
+                        <input item="title" class="form-control" th:field="*{title}" autofocus required/>
                     </div>
                     <div class="form-group">
                         <label for="text" class="control-label" th:text="#{label.pages.post.text}">Post Text</label>
-                        <textarea postID="text" class="form-control" th:field="*{text}" required></textarea>
+                        <textarea item="text" class="form-control" th:field="*{text}" required></textarea>
                     </div>
                     <div class="form-group">
                         <label for="type" class="control-label" th:text="#{label.pages.post.type}">Post Type</label>
-                        <select postID="type" class="form-control" th:field="*{type}">
+                        <select item="type" class="form-control" th:field="*{type}">
                             <option value="TEXT" th:text="#{label.pages.post.options.text}">Text</option>
                             <option value="TEXT" th:text="#{label.pages.post.options.link}">Text</option>
                         </select>
@@ -36,7 +36,7 @@
                         <label for="subName" class="control-label" th:text="#{label.pages.post.subName}">
                             Sub Name
                         </label>
-                        <input postID="subName" class="form-control" th:field="*{subName}"/>
+                        <input item="subName" class="form-control" th:field="*{subName}"/>
                     </div>
                     <br/>
                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>

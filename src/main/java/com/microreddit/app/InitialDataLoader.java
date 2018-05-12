@@ -102,7 +102,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     }
 
     private void generateRandomPosts(User user) {
-        int max = 5000;
+        int max = 50;
         int cycler = 0;
         Random r = new Random();
 
