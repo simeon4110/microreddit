@@ -7,7 +7,7 @@ import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
 /**
- * Defines message model.
+ * Defines amqp model.
  *
  * @author Josh Harkema
  */
@@ -29,7 +29,7 @@ public class Message {
      * @param key             a unique MessageKey.class object.
      * @param messageSender   the sender's username as a String.
      * @param messageReceiver the receiver's username as a String.
-     * @param text            the message text.
+     * @param text            the amqp text.
      */
     public Message(MessageKey key, String messageSender, String messageReceiver, String text) {
         this.key = key;
@@ -55,7 +55,7 @@ public class Message {
     }
 
     /**
-     * @return a JSON formatted string of all message data.
+     * @return a JSON formatted string of all amqp data.
      */
     @Override
     public String toString() {

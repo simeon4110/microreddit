@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 import java.util.UUID;
 
 /**
- * Key class implements cassandra primary key columns for fast message lookups.
+ * Key class implements cassandra primary key columns for fast amqp lookups.
  *
  * @author Josh Harkema
  */
@@ -26,8 +26,8 @@ public class MessageKey implements Serializable {
     private final String timeStamp;
 
     /**
-     * @param senderID   UUID of message sender.
-     * @param receiverID UUID of message receiver.
+     * @param senderID   UUID of amqp sender.
+     * @param receiverID UUID of amqp receiver.
      */
     public MessageKey(final UUID id, final UUID senderID, final UUID receiverID) {
         this.id = UUID.randomUUID();

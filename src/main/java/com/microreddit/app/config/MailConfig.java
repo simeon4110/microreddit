@@ -10,7 +10,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
  * @author Josh Harkema
  */
 @Configuration
-public class ExtraConfig {
+public class MailConfig {
     @Bean
     public JavaMailSenderImpl mailSender() {
         JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();

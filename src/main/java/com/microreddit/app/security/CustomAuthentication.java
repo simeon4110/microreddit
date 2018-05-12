@@ -1,4 +1,4 @@
-package com.microreddit.app.Security;
+package com.microreddit.app.security;
 
 import com.microreddit.app.services.UserDetailsServiceImpl;
 import org.springframework.security.authentication.AuthenticationProvider;
