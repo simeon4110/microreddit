@@ -1,8 +1,7 @@
 package com.microreddit.app.persistence.models.Posts;
 
-import com.datastax.driver.core.DataType;
 import com.datastax.driver.core.utils.UUIDs;
-import org.springframework.data.cassandra.core.mapping.CassandraType;
+import com.microreddit.app.persistence.models.Comments.Comment;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
@@ -42,12 +41,22 @@ public class Post implements Serializable {
     private String text;
     @Column
     private String type;
-    @CassandraType(type = DataType.Name.LIST, typeArguments = DataType.Name.UUID)
-    private List<UUID> comments;
+    @Column
+    private List<Comment> comments;
 
     public Post() {
         this.postID = UUIDs.timeBased();
         this.timestamp = new Timestamp(System.currentTimeMillis()).toString();
+    }
+
+    public void upVote() {
+        this.karma += 1;
+    }
+
+    public void downVote() {
+        if (this.karma >= -20) {
+            this.karma -= 1;
+        }
     }
 
     public UUID getPostID() {
@@ -130,11 +139,14 @@ public class Post implements Serializable {
         this.type = type;
     }
 
-    public List<UUID> getComments() {
+    public List<Comment> getComments() {
         return comments;
     }
 
-    public void setComments(List<UUID> comments) {
+    public void setComments(List<Comment> comments) {
+        if (this.comments == null) {
+            this.comments = new ArrayList<>();
+        }
         this.comments = comments;
     }
 
@@ -187,7 +199,7 @@ public class Post implements Serializable {
     public String toString() {
         return "Post{" +
                 "postID=" + postID +
-                ", timestamp=" + timestamp +
+                ", timestamp='" + timestamp + '\'' +
                 ", userID=" + userID +
                 ", username='" + username + '\'' +
                 ", subID=" + subID +

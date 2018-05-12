@@ -12,11 +12,11 @@
         <form name="f" th:action="@{/login}" method="POST" class="form-inline mx-3">
             <div class="form-group col-md-12 mb-1">
                 <label class="sr-only " for="userID" th:text="#{label.user.userID}">userID</label>
-                <input type="text" id="userID" class="form-control" name="userID" placeholder="username"/>
+                <input type="text" postID="userID" class="form-control" name="userID" placeholder="username"/>
             </div>
             <div class="form-group col-md-12 mb-1">
                 <label class="sr-only" for="password" th:text="#{label.user.password}">Password</label>
-                <input type="password" id="password" class="form-control" name="password" placeholder="password"/>
+                <input type="password" postID="password" class="form-control" name="password" placeholder="password"/>
             </div>
             <br/>
             <div class="form-group col-md-12 mb-1">
