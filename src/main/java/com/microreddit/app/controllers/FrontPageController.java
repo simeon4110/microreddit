@@ -1,17 +1,13 @@
 package com.microreddit.app.controllers;
 
-import com.microreddit.app.persistence.models.Posts.Post;
 import com.microreddit.app.services.PostDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.cassandra.core.query.CassandraPageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * Basic front page render, there is nothing here right now, just a blank page.
@@ -33,20 +29,8 @@ public class FrontPageController {
 
     @Cacheable("front-page")
     @GetMapping("/")
-    public String showFrontPage(Model model, HttpServletRequest request) {
-        int page;
-        int pageSize;
-
-        if (request.getParameter("page") == null || request.getParameter("pageSize") == null) {
-            page = INITIAL_PAGE;
-            pageSize = DEFAULT_PAGE_SIZE;
-        } else {
-            page = Integer.parseInt(request.getParameter("page"));
-            pageSize = Integer.parseInt(request.getParameter("pageSize"));
-        }
-
-        List<Post> posts = postDetailsService.getPage(CassandraPageRequest.of(page, pageSize));
-        model.addAttribute("posts", posts);
+    public String showFrontPage(Model model, Pageable pageable) {
+        model.addAttribute(postDetailsService.findAll(pageable));
 
         return "index";
     }

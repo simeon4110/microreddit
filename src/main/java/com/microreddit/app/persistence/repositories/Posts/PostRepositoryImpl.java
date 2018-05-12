@@ -6,8 +6,6 @@ import com.microreddit.app.persistence.repositories.Posts.Sub.*;
 import org.springframework.data.cassandra.core.CassandraTemplate;
 import org.springframework.data.cassandra.repository.query.CassandraEntityInformation;
 import org.springframework.data.cassandra.repository.support.SimpleCassandraRepository;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -68,12 +66,6 @@ public class PostRepositoryImpl extends SimpleCassandraRepository<Post, UUID> im
         deleteBySubNew(post);
         deleteBySubScore(post);
         super.delete(post);
-    }
-
-    @Override
-    public List<Post> findAllPaged(Pageable pageable) {
-        Slice<Post> postSlice = findAll(pageable);
-        return postSlice.getContent();
     }
 
     @Override

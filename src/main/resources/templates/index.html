@@ -38,6 +38,20 @@
                 <div th:replace="fragments/sidebar :: sidebar-main"></div>
             </div>
         </div>
+        <div class="row justify-content-center">
+            <nav aria-label="Page Navigation">
+                <ul class="pagination">
+                    <!--<li class="page-item">-->
+                    <!--<a class="page-link" th:if="${posts.hasPrevious()}"-->
+                    <!--th:href="@{/(pageSize=20, page=${posts.number - 1})}">&laquo;</a>-->
+                    <!--</li>-->
+                    <!--<li class="page-item">-->
+                    <!--<a class="page-link" th:if="${posts.hasNext()}"-->
+                    <!--th:href="@{/(pageSize=20, page=${posts.number + 1})}">&raquo;</a>-->
+                    <!--</li>-->
+                </ul>
+            </nav>
+        </div>
     </div>
     <div th:replace="fragments/footer :: footer"></div>
     <div th:replace="fragments/footer :: scripts"></div>

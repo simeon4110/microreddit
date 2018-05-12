@@ -51,6 +51,14 @@ devs. Python can be used for 'glue' or other misc needs.
 to work, but we must build something before we can devolve into arguing about how 'x' type of conflict will be resolved 
 or how 'x' type of sub will be moderated.
 
+### Project management methodology:
+
+Right now, as there are very few people working on the project, we're using Kanban (i.e. GitHub issues.) If you want to
+take something on, email Josh and assign yourself to the issue. _Please make sure anything you commit actually builds, I
+know this is strange to have to explicitly state, but I've had some issues in the past._ Testing will be done with JUnit
+(of course) so make sure your unit tests are in the 'test' package and use JUnit 4.12--if you build with Maven the
+included version of JUnit is valid.
+
 ### Note:
 
 Right now the UI is bootstrap based, this is because I (Josh) am not a web designer and I am only comfortable with 

@@ -4,11 +4,10 @@ import com.microreddit.app.persistence.models.Posts.Post;
 import com.microreddit.app.persistence.repositories.Posts.PostRepository;
 import com.microreddit.app.persistence.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -39,13 +38,12 @@ public class PostDetailsService {
         return post;
     }
 
-    public Post getPost(final UUID postID) {
-        return postRepository.findByPostIDEquals(postID);
+    public Slice<Post> findAll(Pageable pageable) {
+        return postRepository.findAll(pageable);
     }
 
-    @Cacheable(value = "page")
-    public List<Post> getPage(Pageable pageable) {
-        return postRepository.findAllPaged(pageable);
+    public Post getPost(final UUID postID) {
+        return postRepository.findByPostIDEquals(postID);
     }
 
     public void save(Post post) {
