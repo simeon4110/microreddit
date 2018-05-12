@@ -1,7 +1,7 @@
 package com.microreddit.app.services;
 
 import com.microreddit.app.persistence.repositories.UserRepository;
-import com.microreddit.app.persistence.repositories.comments.CommentRepositoryImpl;
+import com.microreddit.app.persistence.repositories.comments.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class CommentDetailsService {
-    private final CommentRepositoryImpl commentRepository;
+    private final CommentRepository commentRepository;
     private final UserRepository userRepository;
 
     @Autowired
-    public CommentDetailsService(CommentRepositoryImpl commentRepository, UserRepository userRepository) {
+    public CommentDetailsService(CommentRepository commentRepository, UserRepository userRepository) {
         this.commentRepository = commentRepository;
         this.userRepository = userRepository;
     }
