@@ -4,6 +4,7 @@ import com.microreddit.app.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -22,6 +23,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
+    private static int PASSWORD_STRENGTH;
+
+    @Autowired
+    public WebSecurityConfig(Environment env) {
+        PASSWORD_STRENGTH = Integer.parseInt(env.getProperty("password.encoderstrength"));
+    }
 
     // @formatter:off
     @Override

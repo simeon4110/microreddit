@@ -9,8 +9,11 @@ import com.microreddit.app.persistence.repositories.comments.CommentRepositoryIm
 import com.microreddit.app.persistence.repositories.posts.PostRepository;
 import com.microreddit.app.persistence.repositories.posts.PostRepositoryImpl;
 import com.microreddit.app.persistence.repositories.posts.Sub.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.data.cassandra.config.CassandraClusterFactoryBean;
 import org.springframework.data.cassandra.config.CassandraEntityClassScanner;
 import org.springframework.data.cassandra.config.CassandraSessionFactoryBean;
@@ -33,13 +36,17 @@ import java.util.UUID;
  * @author Josh Harkema
  */
 @Configuration
-//@PropertySource("classpath:environment.properties")
+@PropertySource("classpath:environment.properties")
 @EnableCassandraRepositories(basePackages = {"com.microreddit.app.persistence.repositories"})
 public class CassandraConfig {
-    //    @Value("${cassandra.keyspace}")
-    private static String KEYSPACE = "db";
-    //    @Value("${cassandra.contactpoints}")
-    private static String CONTACTPOINTS = "192.168.0.11";
+    private static String KEYSPACE;
+    private static String CONTACTPOINTS;
+
+    @Autowired
+    public CassandraConfig(final Environment env) {
+        KEYSPACE = env.getProperty("cassandra.keyspace");
+        CONTACTPOINTS = env.getProperty("cassandra.contactpoints");
+    }
 
     private String getKeyspaceName() {
         return KEYSPACE;
