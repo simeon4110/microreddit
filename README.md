@@ -18,6 +18,9 @@ email: [jharkema@protonmail.com](mailto:jharkema@protonmail.com) and introduce y
 to see what's being worked on right now to see if our current tasks are something you're interested in. Feel free to 
 make feature suggestions, but be prepared to implement them yourself. 
 
+Please read [the Java formatting guide](https://github.com/simeon4110/microreddit/wiki) before you jump into the
+project.
+
 ### Fundamental Principles:
 1) Privacy first. Built in comment / post / account purge with auto-scheduler features. Once it's gone, it's gone for
 good.
