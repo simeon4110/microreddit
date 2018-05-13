@@ -17,9 +17,9 @@ import java.util.UUID;
 public class PostBySubCommentsKey implements Serializable {
     @PrimaryKeyColumn(name = "sub_id", type = PrimaryKeyType.PARTITIONED)
     private final UUID subID;
-    @PrimaryKeyColumn(name = "post_id", ordinal = 1, ordering = Ordering.DESCENDING)
+    @PrimaryKeyColumn(name = "post_id", ordinal = 0, ordering = Ordering.DESCENDING)
     private final UUID postID;
-    @PrimaryKeyColumn(name = "num_comments", ordinal = 0, ordering = Ordering.DESCENDING)
+    @PrimaryKeyColumn(name = "num_comments", ordinal = 1, ordering = Ordering.DESCENDING)
     private int numComments;
 
     public PostBySubCommentsKey(UUID subID, UUID postID) {

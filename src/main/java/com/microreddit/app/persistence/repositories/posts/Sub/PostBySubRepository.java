@@ -1,6 +1,7 @@
 package com.microreddit.app.persistence.repositories.posts.Sub;
 
 import com.microreddit.app.persistence.models.Posts.Sub.PostBySub;
+import org.springframework.data.cassandra.repository.AllowFiltering;
 import org.springframework.data.cassandra.repository.CassandraRepository;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -16,6 +17,7 @@ import java.util.UUID;
  */
 @Repository
 public interface PostBySubRepository extends CassandraRepository<PostBySub, UUID> {
+    @AllowFiltering
     PostBySub findByKey_PostID(final UUID id);
 
     List<PostBySub> findByKey_SubID(final UUID subID);

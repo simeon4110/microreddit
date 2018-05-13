@@ -6,9 +6,13 @@ import com.microreddit.app.persistence.repositories.comments.CommentByPostReposi
 import com.microreddit.app.persistence.repositories.comments.CommentByUserRepository;
 import com.microreddit.app.persistence.repositories.comments.CommentRepository;
 import com.microreddit.app.persistence.repositories.comments.CommentRepositoryImpl;
+import com.microreddit.app.persistence.repositories.posts.PostByUserRepository;
 import com.microreddit.app.persistence.repositories.posts.PostRepository;
 import com.microreddit.app.persistence.repositories.posts.PostRepositoryImpl;
-import com.microreddit.app.persistence.repositories.posts.Sub.*;
+import com.microreddit.app.persistence.repositories.posts.Sub.PostBySubCommentsRepository;
+import com.microreddit.app.persistence.repositories.posts.Sub.PostBySubKarmaRepository;
+import com.microreddit.app.persistence.repositories.posts.Sub.PostBySubRepository;
+import com.microreddit.app.persistence.repositories.posts.Sub.PostBySubScoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -94,8 +98,8 @@ public class CassandraConfig {
                                          final PostBySubRepository postBySubRepository,
                                          final PostBySubCommentsRepository postBySubCommentsRepository,
                                          final PostBySubKarmaRepository postBySubKarmaRepository,
-                                         final PostBySubNewRepository postBySubNewRepository,
-                                         final PostBySubScoreRepository postByScoreRepository) throws Exception {
+                                         final PostBySubScoreRepository postByScoreRepository,
+                                         final PostByUserRepository postByUserRepository) throws Exception {
         final CassandraPersistentEntity<?> entity = template.getConverter().getMappingContext()
                 .getRequiredPersistentEntity(Post.class);
         final MappingCassandraEntityInformation metadata = new MappingCassandraEntityInformation<Post, UUID>(
@@ -103,7 +107,7 @@ public class CassandraConfig {
         );
 
         return new PostRepositoryImpl(metadata, template, postBySubRepository, postBySubCommentsRepository,
-                postBySubKarmaRepository, postBySubNewRepository, postByScoreRepository);
+                postBySubKarmaRepository, postByScoreRepository, postByUserRepository);
     }
 
     // Comment repository conf.

@@ -1,8 +1,13 @@
 package com.microreddit.app.persistence.repositories.posts;
 
 import com.microreddit.app.persistence.models.Posts.Post;
+import com.microreddit.app.persistence.models.Posts.PostByUser;
+import com.microreddit.app.persistence.models.Posts.PostByUserKey;
 import com.microreddit.app.persistence.models.Posts.Sub.*;
-import com.microreddit.app.persistence.repositories.posts.Sub.*;
+import com.microreddit.app.persistence.repositories.posts.Sub.PostBySubCommentsRepository;
+import com.microreddit.app.persistence.repositories.posts.Sub.PostBySubKarmaRepository;
+import com.microreddit.app.persistence.repositories.posts.Sub.PostBySubRepository;
+import com.microreddit.app.persistence.repositories.posts.Sub.PostBySubScoreRepository;
 import org.springframework.data.cassandra.core.CassandraTemplate;
 import org.springframework.data.cassandra.repository.query.CassandraEntityInformation;
 import org.springframework.data.cassandra.repository.support.SimpleCassandraRepository;
@@ -17,26 +22,24 @@ import java.util.UUID;
  * @author Josh Harkema
  */
 public class PostRepositoryImpl extends SimpleCassandraRepository<Post, UUID> implements PostRepository {
-    private final CassandraTemplate cassandraTemplate;
     private final PostBySubRepository postBySubRepository;
     private final PostBySubCommentsRepository postBySubCommentsRepository;
     private final PostBySubKarmaRepository postBySubKarmaRepository;
-    private final PostBySubNewRepository postBySubNewRepository;
     private final PostBySubScoreRepository postBySubScoreRepository;
+    private final PostByUserRepository postByUserRepository;
 
     public PostRepositoryImpl(CassandraEntityInformation<Post, UUID> metadata, CassandraTemplate cassandraTemplate,
                               PostBySubRepository postBySubRepository,
                               PostBySubCommentsRepository postBySubCommentsRepository,
                               PostBySubKarmaRepository postBySubKarmaRepository,
-                              PostBySubNewRepository postBySubNewRepository,
-                              PostBySubScoreRepository postBySubScoreRepository) {
+                              PostBySubScoreRepository postBySubScoreRepository,
+                              PostByUserRepository postByUserRepository) {
         super(metadata, cassandraTemplate);
-        this.cassandraTemplate = cassandraTemplate;
         this.postBySubRepository = postBySubRepository;
         this.postBySubCommentsRepository = postBySubCommentsRepository;
         this.postBySubKarmaRepository = postBySubKarmaRepository;
-        this.postBySubNewRepository = postBySubNewRepository;
         this.postBySubScoreRepository = postBySubScoreRepository;
+        this.postByUserRepository = postByUserRepository;
     }
 
     @Override
@@ -44,8 +47,8 @@ public class PostRepositoryImpl extends SimpleCassandraRepository<Post, UUID> im
         insertBySub(post);
         insertBySubComments(post);
         insertBySubKarma(post);
-        insertBySubNew(post);
         insertBySubScore(post);
+        insertByUser(post);
         super.insert(post);
         return post;
 
@@ -63,8 +66,8 @@ public class PostRepositoryImpl extends SimpleCassandraRepository<Post, UUID> im
         deleteBySub(post);
         deleteBySubComments(post);
         deleteBySubKarma(post);
-        deleteBySubNew(post);
         deleteBySubScore(post);
+        deleteByUser(post);
         super.delete(post);
     }
 
@@ -84,6 +87,11 @@ public class PostRepositoryImpl extends SimpleCassandraRepository<Post, UUID> im
     @Override
     public void deleteAll(final Iterable<? extends Post> posts) {
         posts.forEach(this::delete);
+    }
+
+    @Override
+    public void deleteAll() {
+        super.findAll().forEach(this::delete);
     }
 
     @Override
@@ -122,20 +130,20 @@ public class PostRepositoryImpl extends SimpleCassandraRepository<Post, UUID> im
         ));
     }
 
-    private void insertBySubNew(Post post) {
-        PostBySubNewKey key = new PostBySubNewKey(post.getSubID(), post.getPostID());
-        postBySubNewRepository.insert(new PostBySubNew(
-                key, post.getUsername(), post.getSubName(), post.getScore(), post.getKarma(), post.getTitle(),
-                post.getText(), post.getType(), post.getNumComments()
-        ));
-    }
-
     private void insertBySubScore(Post post) {
         PostBySubScoreKey key = new PostBySubScoreKey(post.getSubID(), post.getPostID());
         key.setScore(post.getScore());
         postBySubScoreRepository.insert(new PostBySubScore(
                 key, post.getUsername(), post.getSubName(), post.getKarma(), post.getTitle(), post.getText(),
                 post.getType(), post.getNumComments()
+        ));
+    }
+
+    private void insertByUser(Post post) {
+        PostByUserKey key = new PostByUserKey(post.getUserID(), post.getPostID());
+        postByUserRepository.insert(new PostByUser(
+                key, post.getUsername(), post.getSubName(), post.getTitle(), post.getType(), post.getScore(),
+                post.getKarma(), post.getText(), post.getNumComments()
         ));
     }
 
@@ -151,12 +159,12 @@ public class PostRepositoryImpl extends SimpleCassandraRepository<Post, UUID> im
         postBySubKarmaRepository.delete(postBySubKarmaRepository.findByKey_PostID(post.getPostID()));
     }
 
-    private void deleteBySubNew(final Post post) {
-        postBySubNewRepository.delete(postBySubNewRepository.findByKey_PostID(post.getPostID()));
-    }
-
     private void deleteBySubScore(final Post post) {
         postBySubScoreRepository.delete(postBySubScoreRepository.findByKey_PostID(post.getPostID()));
+    }
+
+    private void deleteByUser(final Post post) {
+        postByUserRepository.delete(postByUserRepository.findByKey_PostID(post.getPostID()));
     }
 
 }

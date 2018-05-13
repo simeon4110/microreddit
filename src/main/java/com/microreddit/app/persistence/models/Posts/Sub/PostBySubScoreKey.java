@@ -17,10 +17,11 @@ import java.util.UUID;
 public class PostBySubScoreKey implements Serializable {
     @PrimaryKeyColumn(name = "sub_id", type = PrimaryKeyType.PARTITIONED)
     private final UUID subID;
-    @PrimaryKeyColumn(name = "score", ordinal = 0, ordering = Ordering.DESCENDING)
-    private int score;
-    @PrimaryKeyColumn(name = "post_id", ordinal = 1, ordering = Ordering.DESCENDING)
+    @PrimaryKeyColumn(name = "post_id", ordinal = 0, ordering = Ordering.DESCENDING)
     private final UUID postID;
+    @PrimaryKeyColumn(name = "score", ordinal = 1, ordering = Ordering.DESCENDING)
+    private int score;
+
 
     public PostBySubScoreKey(UUID subID, UUID postID) {
         this.subID = subID;

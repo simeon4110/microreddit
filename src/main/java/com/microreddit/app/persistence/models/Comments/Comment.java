@@ -8,6 +8,8 @@ import org.springframework.data.cassandra.core.mapping.UserDefinedType;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -34,8 +36,8 @@ public class Comment implements Serializable {
     private String text;
     @Column
     private int karma;
-//    @Column
-//    private List<Comment> children;
+    @Column
+    private List<Comment> children;
 
     public Comment(UUID postID) {
         this.id = UUIDs.timeBased();
@@ -106,17 +108,17 @@ public class Comment implements Serializable {
         this.karma = karma;
     }
 
-//    public List<Comment> getChildren() {
-//        return children;
-//    }
-//
-//    public void setChildren(List<Comment> children) {
-//        if (this.children == null) {
-//            this.children = new ArrayList<>();
-//        }
-//
-//        this.children = children;
-//    }
+    public List<Comment> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Comment> children) {
+        if (this.children == null) {
+            this.children = new ArrayList<>();
+        }
+
+        this.children = children;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -132,8 +134,8 @@ public class Comment implements Serializable {
         if (userID != null ? !userID.equals(comment.userID) : comment.userID != null) return false;
         if (username != null ? !username.equals(comment.username) : comment.username != null) return false;
         if (parentID != null ? !parentID.equals(comment.parentID) : comment.parentID != null) return false;
-        return (text != null ? !text.equals(comment.text) : comment.text != null);// return false;
-//        return children != null ? children.equals(comment.children) : comment.children == null;
+        if (text != null ? !text.equals(comment.text) : comment.text != null) return false;
+        return children != null ? children.equals(comment.children) : comment.children == null;
     }
 
     @Override
@@ -146,7 +148,7 @@ public class Comment implements Serializable {
         result = 31 * result + (parentID != null ? parentID.hashCode() : 0);
         result = 31 * result + (text != null ? text.hashCode() : 0);
         result = 31 * result + karma;
-//        result = 31 * result + (children != null ? children.hashCode() : 0);
+        result = 31 * result + (children != null ? children.hashCode() : 0);
         return result;
     }
 
@@ -161,7 +163,7 @@ public class Comment implements Serializable {
                 ", parentID=" + parentID +
                 ", text='" + text + '\'' +
                 ", karma=" + karma +
-//                ", children=" + children +
+                ", children=" + children +
                 '}';
     }
 

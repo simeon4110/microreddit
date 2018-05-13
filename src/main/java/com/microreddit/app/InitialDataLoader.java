@@ -49,7 +49,6 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     public void onApplicationEvent(ContextRefreshedEvent event) {
         if (alreadySetup) return;
         userRepository.deleteAll();
-        roleRepository.deleteAll();
         privilegeRepository.deleteAll();
         subRepository.deleteAll();
         postRepository.deleteAll();

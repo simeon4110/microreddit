@@ -1,4 +1,4 @@
-package com.microreddit.app.persistence.models.Posts.Sub;
+package com.microreddit.app.persistence.models.Posts;
 
 import org.springframework.data.cassandra.core.cql.Ordering;
 import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
@@ -9,24 +9,22 @@ import java.io.Serializable;
 import java.util.UUID;
 
 /**
- * Compound key auto sorts by score.
- *
  * @author Josh Harkema
  */
 @PrimaryKeyClass
-public class PostBySubKey implements Serializable {
-    @PrimaryKeyColumn(name = "sub_id", type = PrimaryKeyType.PARTITIONED)
-    private final UUID subID;
-    @PrimaryKeyColumn(name = "post_id", ordinal = 0, ordering = Ordering.DESCENDING)
+public class PostByUserKey implements Serializable {
+    @PrimaryKeyColumn(name = "user_id", type = PrimaryKeyType.PARTITIONED)
+    private final UUID userID;
+    @PrimaryKeyColumn(name = "post_id", ordering = Ordering.DESCENDING)
     private final UUID postID;
 
-    public PostBySubKey(UUID subID, UUID postID) {
-        this.subID = subID;
+    public PostByUserKey(UUID userID, UUID postID) {
+        this.userID = userID;
         this.postID = postID;
     }
 
-    public UUID getSubID() {
-        return subID;
+    public UUID getUserID() {
+        return userID;
     }
 
     public UUID getPostID() {
@@ -38,23 +36,23 @@ public class PostBySubKey implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        PostBySubKey key = (PostBySubKey) o;
+        PostByUserKey that = (PostByUserKey) o;
 
-        if (subID != null ? !subID.equals(key.subID) : key.subID != null) return false;
-        return postID != null ? postID.equals(key.postID) : key.postID == null;
+        if (userID != null ? !userID.equals(that.userID) : that.userID != null) return false;
+        return postID != null ? postID.equals(that.postID) : that.postID == null;
     }
 
     @Override
     public int hashCode() {
-        int result = subID != null ? subID.hashCode() : 0;
+        int result = userID != null ? userID.hashCode() : 0;
         result = 31 * result + (postID != null ? postID.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        return "PostBySubKey{" +
-                "subID=" + subID +
+        return "PostByUserKey{" +
+                "userID=" + userID +
                 ", postID=" + postID +
                 '}';
     }
