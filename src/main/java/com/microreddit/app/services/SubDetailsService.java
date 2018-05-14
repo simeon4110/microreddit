@@ -18,8 +18,8 @@ import java.util.UUID;
  */
 @Service
 public class SubDetailsService {
-    private UserRepository userRepository;
-    private SubRepository subRepository;
+    private final UserRepository userRepository;
+    private final SubRepository subRepository;
 
     @Autowired
     public SubDetailsService(UserRepository userRepository, SubRepository subRepository) {

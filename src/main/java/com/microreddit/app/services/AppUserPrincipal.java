@@ -1,9 +1,6 @@
 package com.microreddit.app.services;
 
 import com.microreddit.app.persistence.models.User;
-import com.microreddit.app.persistence.repositories.PrivilegeRepository;
-import com.microreddit.app.persistence.repositories.RoleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,16 +17,11 @@ import java.util.UUID;
  * @author Josh Harkema
  */
 public class AppUserPrincipal implements UserDetails, Serializable {
-    private User user;
-    @Autowired
-    private RoleRepository roleRepository;
-    @Autowired
-    private PrivilegeRepository privilegeRepository;
+    private final User user;
 
     public AppUserPrincipal(User user) {
         this.user = user;
     }
-
 
     /**
      * This is a mess because spring data is a disaster if your db doesn't store UDT's well.

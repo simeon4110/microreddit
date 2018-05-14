@@ -24,13 +24,13 @@ import java.util.*;
 @Component
 public class InitialDataLoader implements ApplicationListener<ContextRefreshedEvent> {
     private boolean alreadySetup = true; // change this to false to add test data.
-    private UserRepository userRepository;
-    private RoleRepository roleRepository;
-    private PrivilegeRepository privilegeRepository;
-    private PasswordEncoder passwordEncoder;
-    private SubRepository subRepository;
-    private PostRepositoryImpl postRepository;
-    private List<Sub> subs;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final PrivilegeRepository privilegeRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final SubRepository subRepository;
+    private final PostRepositoryImpl postRepository;
+    private final List<Sub> subs;
 
     @Autowired
     public InitialDataLoader(UserRepository userRepository, RoleRepository roleRepository,

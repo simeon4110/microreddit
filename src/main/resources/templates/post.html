@@ -35,7 +35,7 @@
                     </div>
                     <div class="form-group">
                         <label for="commenttext" class="control-label">Add a comment: </label>
-                        <textarea item="commenttext" class="form-control" name="text"></textarea>
+                        <textarea id="commenttext" class="form-control" name="text"></textarea>
                     </div>
                     <div sec:authorize="isAuthenticated()">
                         <input type="hidden" name="userID"
@@ -68,6 +68,7 @@
         </div>
         <div th:replace="fragments/footer :: footer"></div>
         <div th:replace="fragments/footer :: scripts"></div>
+    </div>
 </main>
 </body>
 </html>

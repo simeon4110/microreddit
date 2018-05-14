@@ -39,6 +39,7 @@ import java.util.UUID;
  *
  * @author Josh Harkema
  */
+@SuppressWarnings("unchecked")
 @Configuration
 @PropertySource("classpath:environment.properties")
 @EnableCassandraRepositories(basePackages = {"com.microreddit.app.persistence.repositories"})

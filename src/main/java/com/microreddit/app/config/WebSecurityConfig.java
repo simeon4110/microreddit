@@ -21,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    @SuppressWarnings({"SpringJavaAutowiringInspection", "SpringAutowiredFieldsWarningInspection"})
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
     private static int PASSWORD_STRENGTH;
@@ -34,7 +35,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-            .csrf().disable()
             .authorizeRequests()
                 .antMatchers("/static/**", "/img/**").permitAll()
                 .antMatchers("/", "/user/registration").permitAll()
@@ -68,7 +68,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder encoder() {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(11);
-        return encoder;
+        return new BCryptPasswordEncoder(11);
     }
 }

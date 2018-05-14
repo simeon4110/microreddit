@@ -13,7 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.List;
@@ -25,15 +25,20 @@ import java.util.UUID;
  *
  * @author Josh Harkema
  */
-@Service
+@Component
 public class UserDetailsServiceImpl implements UserDetailsService {
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private RoleRepository roleRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
 
+    @Autowired
+    public UserDetailsServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.roleRepository = roleRepository;
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = findUserByUsername(username);
         if (user == null) {
@@ -43,7 +48,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return new AppUserPrincipal(user);
     }
 
-    private User findUserByUsername(String username) {
+    private User findUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByKey_UserName(username);
     }
 
@@ -68,11 +73,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public List<UUID> getUserSubs(String username) throws UsernameNotFoundException {
         try {
             User user = userRepository.findByKey_UserName(username);
-            List<UUID> subs = user.getSubs();
-            return subs;
+            return user.getSubs();
         } catch (UsernameNotFoundException e) {
             System.out.println("Username: " + username + " not found.");
-            return null;
+            return Collections.emptyList();
         }
     }
 

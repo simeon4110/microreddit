@@ -21,6 +21,7 @@ import java.util.UUID;
 /**
  * @author Josh Harkema
  */
+@SuppressWarnings("SpringDataMethodInconsistencyInspection")
 public class PostRepositoryImpl extends SimpleCassandraRepository<Post, UUID> implements PostRepository {
     private final PostBySubRepository postBySubRepository;
     private final PostBySubCommentsRepository postBySubCommentsRepository;
